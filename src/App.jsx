@@ -15,7 +15,7 @@ function App() {
 
   return (
     <AppProvider>
-      <div className=''>
+      <div className='flex flex-col md:flex-row'>
         <Navbar />
         <Routes>
           <Route path='/' element={<Home />} />
