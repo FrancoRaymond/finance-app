@@ -1,1 +1,13 @@
 @import "tailwindcss";
+
+body{
+    @apply bg-gray-200 max-w-[1440px]
+    
+}
+
+.navlink{
+    @apply flex flex-col py-3 font-semibold text-xs items-center border-b-4 px-4 pb-2 transition-colors duration-300 md:border-l-4 md:border-b-0 md:py-3 md:flex-row md:w-full md:text-[1rem]
+}
+.activeLink{
+    @apply bg-white rounded-md rounded-t-md rounded-b-none md:rounded-br-md md:rounded-tr-md md:rounded-tl-none md:border-l-4 border-black
+}

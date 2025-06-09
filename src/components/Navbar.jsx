@@ -25,73 +25,80 @@ const Navbar = () => {
     return () => window.removeEventListener('resize', handleResize)
   },[])
 
+  useEffect(() => {
+    if (size < 768 && menuMinimized) {
+      setMenuMinimized(false);
+    }
+  }, [size, menuMinimized]);
+
   return (
-    <div className='bg-gray-200 flex px-1 pt-1 md:max-w-60 md:h-screen md:flex-col md:justify-between md:py-5'>
-      <nav className=''>
-        <ul className='flex items-center justify-between w-full md:flex-col md:gap-3 md:pr-3'>
+    <div className='bg-gray-300 flex px-1 md:px-0 pt-1 fixed bottom-0 left-0 w-full md:relative md:pr-3 md:w-fit md:h-screen md:flex-col md:justify-between md:py-5 md:rounded-tr-2xl md:rounded-br-2xl'>
+      <nav className='w-full'>
+        {!menuMinimized && <h1 className={`hidden mb-8 font-bold ml-3 text-2xl md:flex pr-24 lg:pr-36`}>Finance</h1>}
+        <ul className=' grid grid-cols-5 px-2 md:px-0 md:flex md:flex-col md:gap-3'>
           <li>
             <Link
               to="/"
-              className={` ${
-                location.pathname === '/' ? 'bg-white rounded-md rounded-t-md rounded-b-none md:border-l-4 border-black' : 'border-transparent'
-              } flex items-center border-b-4 pb-2 md:border-l-4 md:pl-2 md:border-b-0 md:pb-0 transition-colors duration-300 flex-col py-3 font-semibold text-xs md:flex-row px-2 md:text-[1rem] md:gap-4 md:px-5`}
+              className={`navlink ${menuMinimized ? '' : 'md:gap-4'} ${
+                location.pathname === '/' ? 'activeLink' : 'border-transparent'
+              }`}
             >
-              <img src={home} alt="" className='size-4 md:size-5'/>
-              <span className={`${menuMinimized ? 'w-0 overflow-hidden transition duration-700' : 'w-fit transition duration-700'}`}>Overview</span>
+              <img src={home} alt="" className='size-6'/>
+              <span className={`hidden sm:flex ${menuMinimized ? 'w-0 overflow-hidden transition duration-300' : 'w-fit transition duration-300'}`}>Overview</span>
             </Link>
           </li>
           <li>
             <Link
               to="/transactions"
-              className={`${
-                location.pathname === '/transactions' ? 'bg-white rounded-md border-b-4 rounded-t-md rounded-b-none md:border-l-4 border-black' : ''
-              } flex items-center flex-col py-3 font-semibold text-xs md:flex-row px-2 md:text-[1rem] md:gap-4 md:px-5`}
+              className={`navlink ${menuMinimized ? '' : 'md:gap-4'} ${
+                location.pathname === '/transactions' ? 'activeLink' : 'border-transparent'
+              } `}
             >
-              <img src={transactions} alt="" className='size-4 md:size-5 rotate-90'/>
-              <span className={`${menuMinimized ? 'w-0 overflow-hidden transition duration-700' : 'w-fit transition duration-700'}`}>Transactions</span>
+              <img src={transactions} alt="" className='size-6 rotate-90'/>
+              <span className={`hidden sm:flex ${menuMinimized ? 'w-0 overflow-hidden transition duration-300' : 'w-fit transition duration-300'}`}>Transactions</span>
             </Link>
           </li>
           <li>
             <Link
               to="/budgets"
-              className={`${
-                location.pathname === '/budgets' ? 'bg-white rounded-md border-b-4 rounded-t-md rounded-b-none md:border-l-4 border-black' : ''
-              } flex items-center flex-col py-3 font-semibold text-xs md:flex-row px-2 md:text-[1rem] md:gap-4 md:px-5`}
+              className={`navlink ${menuMinimized ? '' : 'md:gap-4'} ${
+                location.pathname === '/budgets' ? 'activeLink' : 'border-transparent'
+              } `}
             >
-              <img src={budget} alt="" className='size-4 md:size-5'/>
-              <span className={`${menuMinimized ? 'w-0 overflow-hidden transition duration-700' : 'w-fit transition duration-700'}`}>Budgets</span>
+              <img src={budget} alt="" className='size-6'/>
+              <span className={`hidden sm:flex ${menuMinimized ? 'w-0 overflow-hidden transition duration-300' : 'w-fit transition duration-300'}`}>Budgets</span>
             </Link>
           </li>
           <li>
             <Link
               to="/pots"
-              className={`${
-                location.pathname === '/pots' ? 'bg-white rounded-md border-b-4 rounded-t-md rounded-b-none md:border-l-4 border-black' : ''
-              } flex items-center flex-col py-3 font-semibold text-xs md:flex-row px-2 md:text-[1rem] md:gap-4 md:px-5`}
+              className={`navlink ${menuMinimized ? '' : 'md:gap-4'} ${
+                location.pathname === '/pots' ? 'activeLink' : 'border-transparent'
+              } `}
             >
-              <img src={pots} alt="" className='size-5 md:size-6'/>
-              <span className={`${menuMinimized ? 'w-0 overflow-hidden transition duration-700' : 'w-fit transition duration-700'}`}>Pots</span>
+              <img src={pots} alt="" className='size-6 md:size-7'/>
+              <span className={`hidden sm:flex ${menuMinimized ? 'w-0 overflow-hidden transition duration-300' : 'w-fit transition duration-300'}`}>Pots</span>
             </Link>
           </li>
           <li>
             <Link
               to="/recurringbills"
-              className={`${
-                location.pathname === '/recurringbills' ? 'bg-white rounded-md border-b-4 rounded-t-md rounded-b-none md:border-l-4 border-black' : ''
-              } flex items-center flex-col py-3 font-semibold text-xs md:flex-row px-2 md:text-[1rem] md:gap-4 md:px-5`}
+              className={`navlink ${menuMinimized ? '' : 'md:gap-4'} ${
+                location.pathname === '/recurringbills' ? 'activeLink' : 'border-transparent'
+              } `}
             >
-              <img src={bills} alt="" className='size-4 md:size-5'/>
-              <span className={`${menuMinimized ? 'w-0 overflow-hidden transition duration-700' : 'w-fit transition duration-700'}`}>Recurring bills</span>
+              <img src={bills} alt="" className='size-6'/>
+              <span className={`hidden sm:flex ${menuMinimized ? 'w-0 overflow-hidden transition duration-300' : 'w-fit transition duration-300'}`}>Recurring bills</span>
             </Link>
           </li>
         </ul>
       </nav>
-      <button 
-        className='hidden py-3 md:flex items-center font-semibold gap-4 px-6 cursor-pointer '
+      <button
+        className='hidden py-3 md:flex items-center font-semibold gap-4 pl-4 cursor-pointer '
         onClick={() => setMenuMinimized(menuMinimized ? false : true)}
       >
-        <img src={arrow} alt="" className={`size-6 ${menuMinimized ? 'rotate-180 transition duration-700' : 'rotate-0 transition duration-700'}`}/>
-        <span className={`${menuMinimized ? 'w-0 overflow-hidden transition duration-700' : 'w-fit transition duration-700'}`}>Minimize Menu</span>
+        <img src={arrow} alt="" className={`size-6 ${menuMinimized ? 'rotate-180 transition duration-300' : 'rotate-0 transition duration-300'}`}/>
+        <span className={`${menuMinimized ? 'w-0 overflow-hidden transition duration-300' : 'w-fit transition duration-300'}`}>Minimize Menu</span>
       </button>
     </div>
   )
