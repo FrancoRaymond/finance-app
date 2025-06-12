@@ -13,7 +13,7 @@ const OverviewPots = () => {
           <img src={pots} alt="" className='size-8'/>
           <div>
             <p className='text-sm text-gray-500'>Total saved</p>
-            <h2 className='text-black text-3xl mt-2 font-bold'>R980</h2>
+            <h2 className='text-black text-2xl mt-2 font-bold'>R980</h2>
           </div>
         </div>
         <div className='grid grid-cols-2 mt-3 gap-4'>
