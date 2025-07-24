@@ -4,7 +4,7 @@ import p1 from '../images/profile-1.jpg'
 import p2 from '../images/profile-2.jpg'
 import p3 from '../images/profile-3.jpg'
 
-export const Transactions = [
+export const transactions = [
     {
         id:1,
         image: p1,

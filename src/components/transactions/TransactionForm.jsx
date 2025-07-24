@@ -1,13 +1,13 @@
 import React from 'react'
 import close from '../../assets/images/icon-close.svg'
 
-const TransactionForm = () => {
+const TransactionForm = ({setShowTransactionForm}) => {
   return (
-    <div className='transactionForm fixed flex items-center justify-center top-0 left-0 w-full h-screen'>
+    <div className='transactionForm fixed flex items-center transition-all duration-500 justify-center top-0 left-0 w-full h-screen'>
       <div className='bg-white max-w-md w-full p-5 rounded-md'>
           <div className='flex justify-between items-center mb-5'>
             <p className='font-semibold text-md text-[1rem]'>Add new Transaction</p>
-            <img src={close} alt="" className='size-5 cursor-pointer'/>
+            <button onClick={() => setShowTransactionForm(false)}><img src={close} alt="" className='size-5 cursor-pointer'/></button>
           </div>
           <form action="" className='text-[15px] flex flex-col'>
             <label htmlFor="transactionName" className='text-sm font-semibold text-gray-400'>Transaction name</label>
