@@ -6,13 +6,46 @@ import { transactions } from '../assets/data/transactions.js'
 const Transactions = () => {
   const [showTransactionForm, setShowTransactionForm] = useState(false)
   const [searchTerm, setSearchTerm] = useState("")
+  const [sortType, setSortType] = useState("Latest");
+  const [categoryFilter, setCategoryFilter] = useState("all");
   const [filteredTransactions, setFilteredTransactions] = useState([])
 
   useEffect(() => {
-    setFilteredTransactions(transactions.filter(trans => searchTerm !== "" ? trans.name.toLowerCase().startsWith(searchTerm.toLowerCase()) : transactions))
-  }, [searchTerm])
+    let result = [...transactions];
 
- 
+  if (searchTerm) {
+    result = result.filter(trans =>
+      trans.name.toLowerCase().startsWith(searchTerm.toLowerCase())
+    );
+  }
+    if (categoryFilter !== "all") {
+      result = result.filter(trans => trans.category === categoryFilter);
+    }
+   
+    switch (sortType) {
+      case "Latest":
+        result.sort((a, b) => new Date(b.date) - new Date(a.date));
+        break;
+      case "Oldest":
+        result.sort((a, b) => new Date(a.date) - new Date(b.date));
+        break;
+      case "A-Z":
+        result.sort((a, b) => a.name.localeCompare(b.name));
+        break;
+      case "Z-A":
+        result.sort((a, b) => b.name.localeCompare(a.name));
+        break;
+      case "Highest":
+        result.sort((a, b) => b.amount - a.amount);
+        break;
+      case "Lowest":
+        result.sort((a, b) => a.amount - b.amount);
+        break;
+    }
+
+    setFilteredTransactions(result);
+  }, [searchTerm, sortType, categoryFilter, transactions])
+
 
   return (
     <div className='text-2xl py-5 px-2 md:px-5 w-full'>
@@ -26,7 +59,7 @@ const Transactions = () => {
           <input onChange={(e) => setSearchTerm(e.target.value)} type="text" placeholder='Search Transaction' className='outline-none text-[1rem] border rounded-md py-2 px-3 border-gray-400'/>
           <div className='flex items-center gap-3'>
             <label htmlFor="" className='text-sm font-semibold text-gray-400 mt-2.5'>Sort by</label>
-            <select name="" id="" className='outline-none text-[1rem] cursor-pointer mt-1.5 border rounded-md py-2 px-3 border-gray-400'>
+            <select name="" id="" onChange={(e) => setSortType(e.target.value)} className='outline-none text-[1rem] cursor-pointer mt-1.5 border rounded-md py-2 px-3 border-gray-400'>
               <option value="Latest">Latest</option>
               <option value="Oldest">Oldest</option>
               <option value="A-Z">A to Z</option>
@@ -37,7 +70,7 @@ const Transactions = () => {
           </div>
           <div className='flex items-center gap-3'>
             <label htmlFor="" className='text-sm font-semibold text-gray-400 mt-2.5'>Filter by category</label>
-            <select name="" id="" className='outline-none text-[1rem] cursor-pointer mt-1.5 border rounded-md py-2 px-3 border-gray-400'>
+            <select name="" id="" onChange={(e) => setCategoryFilter(e.target.value)} className='outline-none text-[1rem] cursor-pointer mt-1.5 border rounded-md py-2 px-3 border-gray-400'>
               <option value="all">All Transactions</option>
               <option value="entertainment">Entertainment</option>
               <option value="bills">Bills</option>
@@ -71,4 +104,4 @@ const Transactions = () => {
   )
 }
 
-export default Transactions
+export default Transactions 
