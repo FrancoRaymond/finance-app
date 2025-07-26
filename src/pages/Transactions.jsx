@@ -79,26 +79,30 @@ const Transactions = () => {
             </select>
           </div>  
         </div>
-        <table className='w-full mt-6 text-left flex flex-col gap-3'>
-          <tr className='text-sm font-semibold text-gray-400 px-2 items-center grid grid-cols-4 py-2 borde-b border-gray-400'>
-            <th>Recepient / Sender</th>
-            <th>Category</th>
-            <th>Transactiion Date</th>
-            <th>Amount</th>
-          </tr>
-          <tbody className='flex flex-col gap-3'>
-            {
-              filteredTransactions.map(transaction => (
-                <tr key={transaction.id} className='text-sm px-2 grid grid-cols-4 items-center'>
-                  <td className='flex items-center gap-3'><img src={transaction.image} alt="" className='size-7 rounded-full'/> {transaction.name}</td>
-                  <td>Education</td>
-                  <td>{transaction.date}</td>
-                  <td>R{transaction.amount}</td>
-                </tr>
-              ))
-            }
-          </tbody>
-        </table>
+        <div className='overflow-x-auto'>
+          <table className='min-w-full table-auto mt-6 text-left flex flex-col gap-3'>
+            <thead>
+              <tr className='text-sm font-semibold text-gray-400 px-2 items-center grid grid-cols-4 py-2 borde-b border-gray-400'>
+                <th>Recepient / Sender</th>
+                <th>Category</th>
+                <th>Transactiion Date</th>
+                <th>Amount</th>
+              </tr>
+            </thead>
+            <tbody className='flex flex-col gap-3'>
+              {
+                filteredTransactions.map(transaction => (
+                  <tr key={transaction.id} className='text-sm px-2 grid grid-cols-4 items-center'>
+                    <td className='flex items-center gap-3'><img src={transaction.image} alt="" className='size-7 rounded-full'/> {transaction.name}</td>
+                    <td>Education</td>
+                    <td>{transaction.date}</td>
+                    <td>R{transaction.amount}</td>
+                  </tr>
+                ))
+              }
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   )
