@@ -1,4 +1,4 @@
-import React,{useState, useEffect} from 'react'
+import React,{useState, useEffect, useRef} from 'react'
 import { Link } from 'react-router-dom';
 import { useLocation } from 'react-router-dom'; 
 import { useAppContext } from '../context/context';
@@ -11,10 +11,13 @@ import arrow from '../assets/images/arrow.svg'
 
 
 
-const Navbar = () => {
+const Navbar = ({setNavWidth}) => {
   const location = useLocation(); 
   const [menuMinimized, setMenuMinimized] = useState(false)
   const [size, setSize] = useState(window.innerWidth)
+  const elementRef = useRef(null);
+  
+  
 
   useEffect(() => {
     const handleResize = () => {
@@ -31,8 +34,25 @@ const Navbar = () => {
     }
   }, [size, menuMinimized]);
 
+ 
+  useEffect(() => {
+    const observer = new ResizeObserver((entries) => {
+      for (let entry of entries) {
+        setNavWidth(entry.contentRect.width);
+      }
+    });
+
+    if (elementRef.current) {
+      observer.observe(elementRef.current);
+    }
+
+    return () => {
+      observer.disconnect();
+    };
+  }, [setNavWidth]);
+
   return (
-    <div className='bg-gray-300 flex px-1 md:px-0 pt-1 fixed bottom-0 left-0 w-full md:relative md:pr-3 md:w-fit md:h-screen md:flex-col md:justify-between md:py-5 md:rounded-tr-2xl md:rounded-br-2xl'>
+    <div ref={elementRef} className='bg-gray-300 flex px-1 md:px-0 pt-1 fixed bottom-0 left-0 w-full md:pr-3 md:w-fit md:h-screen md:flex-col md:justify-between md:py-5 md:rounded-tr-2xl md:rounded-br-2xl'>
       <nav className='w-full'>
         {!menuMinimized && <h1 className={`hidden mb-8 font-bold ml-3 text-2xl md:flex pr-24 lg:pr-36`}>Finance</h1>}
         <ul className=' grid grid-cols-5 px-2 md:px-0 md:flex md:flex-col md:gap-3'>
