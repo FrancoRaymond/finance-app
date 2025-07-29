@@ -12,6 +12,7 @@ body{
     @apply bg-white rounded-md rounded-t-md rounded-b-none md:rounded-br-md md:rounded-tr-md md:rounded-tl-none md:border-l-4 border-black
 }
 
-.transactionForm{
+.transactionForm,
+.budgetForm{
     background-color: rgba(0, 0, 0, 0.5);
 }

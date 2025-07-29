@@ -16,7 +16,7 @@ function App() {
     <AppProvider>
       <div className='flex flex-col md:flex-row'>
         <Navbar setNavWidth={setNavWidth} />
-    <div className={`flex-1 transition-all duration-300 ${navWidth > 72  ? "md:ml-[205px] lg:ml-[250px]" : "md:ml-[84px] lg:ml-[70px]"}`}>
+    <div className={`flex-1 transition-all duration-300 ${navWidth > 72  ? "md:ml-[250px]" : "md:ml-[70px]"}`}>
           <Routes>
             <Route path='/' element={<Home />} />
             <Route path='/transactions' element={<Transactions />} />

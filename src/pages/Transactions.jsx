@@ -48,7 +48,7 @@ const Transactions = () => {
 
 
   return (
-    <div className='text-2xl py-5 px-2 md:px-5 w-full'>
+    <div className='py-5 px-2 md:px-5 w-full'>
       {showTransactionForm && <TransactionForm setShowTransactionForm={setShowTransactionForm} />}
       <div className='flex items-center justify-between'>
         <h2 className='font-semibold sm:text-3xl'>Transactions</h2>
