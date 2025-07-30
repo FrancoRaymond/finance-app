@@ -1,11 +1,13 @@
-import React, { createContext, useContext} from "react";
+import React, { createContext, useContext, useState} from "react";
 
 const AppContext = createContext(); 
 
 
 const AppProvider = ({ children }) => {
+  const [value, setValue] = useState('')
+
   return (
-    <AppContext.Provider>
+    <AppContext.Provider value={value}>
       {children}
     </AppContext.Provider>
   );

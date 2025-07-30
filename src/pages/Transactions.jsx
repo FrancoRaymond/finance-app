@@ -55,10 +55,10 @@ const Transactions = () => {
         <button className='rounded-md text-white bg-black hover:bg-gray-700 cursor-pointer py-1.5 px-3 text-[1rem] font-semibold' onClick={() => setShowTransactionForm(true)}>+Add new transaction</button>
       </div>
       <div className='px-2 py-5 sm:px-5 bg-white rounded-md mt-7'>
-        <div className='flex items-center justify-between'>
-          <input onChange={(e) => setSearchTerm(e.target.value)} type="text" placeholder='Search Transaction' className='outline-none text-[1rem] border rounded-md py-2 px-3 border-gray-400'/>
+        <div className='flex flex-col gap-2.5 lg:flex-row lg:items-center lg:justify-between '>
+          <input onChange={(e) => setSearchTerm(e.target.value)} type="text" placeholder='Search Transaction' className='outline-none max-w-3xs text-[1rem] border rounded-md py-2 px-3 border-gray-400'/>
           <div className='flex items-center gap-3'>
-            <label htmlFor="" className='text-sm font-semibold text-gray-400 mt-2.5'>Sort by</label>
+            <label htmlFor="" className='hidden lg:flex text-sm font-semibold text-gray-400 mt-2.5'>Sort by</label>
             <select name="" id="" onChange={(e) => setSortType(e.target.value)} className='outline-none text-[1rem] cursor-pointer mt-1.5 border rounded-md py-2 px-3 border-gray-400'>
               <option value="Latest">Latest</option>
               <option value="Oldest">Oldest</option>
@@ -69,7 +69,7 @@ const Transactions = () => {
             </select>
           </div>
           <div className='flex items-center gap-3'>
-            <label htmlFor="" className='text-sm font-semibold text-gray-400 mt-2.5'>Filter by category</label>
+            <label htmlFor="" className='hidden lg:flex text-sm font-semibold text-gray-400 mt-2.5'>Filter by category</label>
             <select name="" id="" onChange={(e) => setCategoryFilter(e.target.value)} className='outline-none text-[1rem] cursor-pointer mt-1.5 border rounded-md py-2 px-3 border-gray-400'>
               <option value="all">All Transactions</option>
               <option value="entertainment">Entertainment</option>
@@ -82,7 +82,7 @@ const Transactions = () => {
         <div className='overflow-x-auto'>
           <table className='min-w-full table-auto mt-6 text-left flex flex-col gap-3'>
             <thead>
-              <tr className='text-sm font-semibold text-gray-400 px-2 items-center grid grid-cols-4 py-2 borde-b border-gray-400'>
+              <tr className='text-sm font-semibold text-center text-gray-400 px-2 items-center grid grid-cols-4 py-2 borde-b border-gray-400'>
                 <th>Recepient / Sender</th>
                 <th>Category</th>
                 <th>Transactiion Date</th>
@@ -92,7 +92,7 @@ const Transactions = () => {
             <tbody className='flex flex-col gap-3'>
               {
                 filteredTransactions.map(transaction => (
-                  <tr key={transaction.id} className='text-sm px-2 grid grid-cols-4 items-center'>
+                  <tr key={transaction.id} className='text-sm text-center px-2 grid grid-cols-4 items-center'>
                     <td className='flex items-center gap-3'><img src={transaction.image} alt="" className='size-7 rounded-full'/> {transaction.name}</td>
                     <td>Education</td>
                     <td>{transaction.date}</td>
