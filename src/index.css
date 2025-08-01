@@ -13,6 +13,7 @@ body{
 }
 
 .transactionForm,
-.budgetForm{
+.budgetForm,
+.potsForm{
     background-color: rgba(0, 0, 0, 0.5);
 }

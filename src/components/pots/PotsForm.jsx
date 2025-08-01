@@ -19,7 +19,7 @@ const PotsForm = ({setShowPotForm}) => {
   }
 
   return (
-    <div className='budgetForm fixed flex items-center transition-all duration-500 justify-center top-0 left-0 w-full h-screen'>
+    <div className='potsForm fixed flex items-center transition-all duration-500 justify-center top-0 left-0 w-full h-screen'>
       <div className='bg-white max-w-md w-full p-5 rounded-md'>
           <div className='flex justify-between items-center mb-4'>
             <p className='font-semibold text-md text-[1rem]'>Add new Pot</p>

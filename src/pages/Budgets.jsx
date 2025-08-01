@@ -7,7 +7,7 @@ const Budgets = () => {
     <div className='py-5 px-2 md:px-5 w-full'>
       {showBudgetForm && <BudgetForm setShowBudgetForm={setShowBudgetForm} />}
       <div className='flex items-center justify-between'>
-        <h2 className='font-semibold sm:text-3xl'>Budgets</h2>
+        <h2 className='font-semibold text-2xl sm:text-3xl'>Budgets</h2>
         <button className='rounded-md text-white bg-black hover:bg-gray-700 cursor-pointer py-1.5 px-3 text-[1rem] font-semibold' onClick={() => setShowBudgetForm(true)}>+Add new Budget</button>
       </div>
       <div className='grid grid-cols-1 lg:grid-cols-2 gap-4 mt-7'>
@@ -41,7 +41,7 @@ const Budgets = () => {
             </div>
             <div className='p-4 bg-gray-200 rounded-md lg:col-span-3 lg:row-span-3 mt-4'>
               <div className='flex items-center justify-between'>
-                <h2 className='text-lg font-semibold'>Transaction</h2>
+                <h2 className='text-lg font-semibold'>Latest spending</h2>
                 <button className='text-sm text-gray-500 cursor-pointer'>View All</button>
               </div>
               <div className='mt-3'>

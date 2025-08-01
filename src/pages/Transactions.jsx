@@ -51,7 +51,7 @@ const Transactions = () => {
     <div className='py-5 px-2 md:px-5 w-full'>
       {showTransactionForm && <TransactionForm setShowTransactionForm={setShowTransactionForm} />}
       <div className='flex items-center justify-between'>
-        <h2 className='font-semibold sm:text-3xl'>Transactions</h2>
+        <h2 className='font-semibold text-2xl sm:text-3xl'>Transactions</h2>
         <button className='rounded-md text-white bg-black hover:bg-gray-700 cursor-pointer py-1.5 px-3 text-[1rem] font-semibold' onClick={() => setShowTransactionForm(true)}>+Add new transaction</button>
       </div>
       <div className='px-2 py-5 sm:px-5 bg-white rounded-md mt-7'>
@@ -102,6 +102,11 @@ const Transactions = () => {
               }
             </tbody>
           </table>
+        </div>
+        <div className='flex justify-between items-center my-8'>
+          <button className='bg-gray-200 text-gray-400 px-2 py-1 cursor-pointer rounded-md'>Prev</button>
+          <span className='px-1.5 py-1 bg-black text-white rounded-md'>1</span>
+          <button className='bg-gray-200 text-gray-400 px-2 py-1 cursor-pointer rounded-md'>Next</button>
         </div>
       </div>
     </div>
