@@ -52,8 +52,8 @@ const Navbar = ({setNavWidth}) => {
   }, [setNavWidth]);
 
   return (
-    <div ref={elementRef} className={`bg-gray-300 flex px-1 md:px-0 pt-1 fixed bottom-0 left-0 w-full md:h-screen md:flex-col md:justify-between md:py-5 md:rounded-tr-2xl md:rounded-br-2xl transition-all duration-300 ease-in-out
-    ${menuMinimized ? 'md:w-[4.5rem] pr-3' : 'md:w-64'}`}>
+    <div ref={elementRef} className={`bg-gray-300 z-20 flex px-1 md:px-0 pt-1 fixed bottom-0 left-0 w-full md:h-screen md:flex-col md:justify-between md:py-5 md:rounded-tr-2xl md:rounded-br-2xl transition-all duration-300 ease-in-out
+      ${menuMinimized ? 'md:w-[4.5rem] pr-3' : 'md:w-64'}`}>
       <nav className='w-full md:pr-3'>
         <div className='font-bold ml-5 text-2xl hidden md:flex mb-6 w-fit'>
           <span>F</span>
