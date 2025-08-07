@@ -1,8 +1,10 @@
 import React,{useState} from 'react'
 import close from '../../assets/images/icon-close.svg'
+import { useAppContext } from '../../context/context'
 
 const BudgetForm = ({setShowBudgetForm}) => {
-  const [formData, setFormData] = useState({category: "", amount: null, name: ""})
+  const {budgets, setBudgets} = useAppContext()
+  const [formData, setFormData] = useState({category: "", amount: "", name: ""})
 
   const handleInputChanges = (e) => {
     const {name, type, value, checked} = e.target
@@ -14,7 +16,15 @@ const BudgetForm = ({setShowBudgetForm}) => {
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    setShowBudgetForm(false) 
+
+    const newBudget = {
+      id: Date.now(),
+      category: formData.category,
+      amount: parseFloat(formData.amount),
+      theme: formData.name
+    }
+    setBudgets((prev) => [...prev, newBudget])
+    setShowBudgetForm(false)    
   }
 
   return (
@@ -26,7 +36,7 @@ const BudgetForm = ({setShowBudgetForm}) => {
           </div>
           <p className='text-sm text-gray-400 mb-4'>Choose a category to set a spending budget. These categories can help you monitor spending.</p>
           <form action="" onSubmit={handleSubmit} className='text-[15px] flex flex-col'>
-            <label htmlFor="" className='text-sm font-semibold text-gray-400 mt-2.5'>Category</label>
+            <label htmlFor="category" className='text-sm font-semibold text-gray-400 mt-2.5'>Category</label>
             <select 
               name="category"
               id='category'
@@ -48,7 +58,7 @@ const BudgetForm = ({setShowBudgetForm}) => {
               <option value="shopping">Shopping</option>
               <option value="general">General</option>
             </select>
-            <label htmlFor="" className='text-sm font-semibold text-gray-400 mt-2.5'>Maximum spend</label>
+            <label htmlFor="amount" className='text-sm font-semibold text-gray-400 mt-2.5'>Maximum spend</label>
             <input 
               type="number" 
               id='amount'
@@ -59,7 +69,7 @@ const BudgetForm = ({setShowBudgetForm}) => {
               placeholder='e.g R1000' 
               className='outline-none mt-1.5 border rounded-md py-2 px-3 border-gray-400'
             />
-            <label htmlFor="" className='text-sm font-semibold text-gray-400 mt-2.5'>Theme</label>
+            <label htmlFor="theme" className='text-sm font-semibold text-gray-400 mt-2.5'>Theme</label>
             <select 
               name="theme" 
               id='theme'

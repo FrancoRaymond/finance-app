@@ -4,10 +4,22 @@ const AppContext = createContext();
 
 
 const AppProvider = ({ children }) => {
-  const [value, setValue] = useState('')
+  const [ addedTransactions, setAddedTransactions ] = useState([])
+  const [budgets, setBudgets] = useState([])
+  const [pots, setPots] = useState([])
 
   return (
-    <AppContext.Provider value={value}>
+    <AppContext.Provider value={
+      {
+        addedTransactions, 
+        setAddedTransactions,
+        budgets, 
+        setBudgets,
+        pots, 
+        setPots
+      }
+    }
+    >
       {children}
     </AppContext.Provider>
   );
