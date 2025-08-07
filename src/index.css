@@ -1,6 +1,7 @@
 @import "tailwindcss";
 
 body{
+    font-family: "Inter", sans-serif;
     @apply bg-gray-200 max-w-[1440px]
     
 }
