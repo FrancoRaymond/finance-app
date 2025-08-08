@@ -79,17 +79,17 @@ const BudgetForm = ({setShowBudgetForm}) => {
               className='outline-none mt-1.5 border rounded-md py-2 px-3 border-gray-400'
             >
               <option value="">Select a theme</option>
-              <option value="green">Green</option>
-              <option value="grey">Grey</option>
-              <option value="cyan">Cyan</option>
-              <option value="orange">Orange</option>
-              <option value="purple">Purple</option>
-              <option value="red">Red</option>
-              <option value="yellown">Yellow</option>
-              <option value="navy">Navy</option>
-              <option value="turquoise">Turquoise</option>
-              <option value="brown">Brown</option>
-              <option value="magenta">Magenta</option>
+              <option value="#f1cdab">Beige</option>
+              <option value="#6B7280">Grey</option>
+              <option value="#008B8B">Cyan</option>
+              <option value="#CC5500">Orange</option>
+              <option value="#247976">Green</option>
+              <option value="#83c8d8">Blue</option>
+              <option value="#B8860B">Yellow</option>
+              <option value="#f16b76">Crimson</option>
+              <option value="#00CED1">Turquoise</option>
+              <option value="#8B4513">Brown</option>
+              <option value="#8b008b">Magenta</option>
             </select>
             <button type='submit' className='bg-gray-950 mt-2.5 cursor-pointer hover:bg-gray-700 py-2.5 rounded-md text-white w-full'>Submit</button>
           </form>

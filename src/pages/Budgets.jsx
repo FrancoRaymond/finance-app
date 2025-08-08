@@ -17,11 +17,15 @@ const Budgets = () => {
       <div className='grid grid-cols-1 lg:grid-cols-2 gap-4 mt-7'>
         <div className='w-full bg-white p-20 rounded-md'></div>
         {
-          budgets.map(budget => (
-            budgets.length === 0 ? 
-            (<div className='rounded-md bg-gray-300 py-20 px-5 text-gray-500'>Added budgets will appear here</div>) : 
-            (<BudgetCard budget={budget}/>)
-          ))
+          budgets.length === 0 ? (
+            <div className='rounded-md bg-gray-300 py-20 px-5 text-gray-500 text-center'>
+              Added budgets will appear here
+            </div>
+          ) : (
+            budgets.map(budget => (
+              <BudgetCard key={budget.id} budget={budget} />
+            ))
+          )
         }
       </div>
     </div>
