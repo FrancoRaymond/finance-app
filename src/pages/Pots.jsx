@@ -40,7 +40,7 @@ const Pots = () => {
             <button className='rounded-md text-black bg-gray-200 hover:bg-white hover:border hover:border-gray-600 transition duration-200 cursor-pointer py-3 px-5 text-[1rem] font-semibold' >Withdraw</button>
           </div>
         </div>
-      </div>
+      </div>  
     </div>
   )
 }
