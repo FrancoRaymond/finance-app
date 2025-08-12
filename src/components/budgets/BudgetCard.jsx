@@ -1,10 +1,12 @@
 import React,{useState} from 'react'
 import EditAndDelete from '../EditAndDelete'
 import DeleteModal from '../DeleteModal';
+import { useAppContext } from '../../context/context';
 
-const BudgetCard = ({budget}) => {
+const BudgetCard = ({budget, setBudget}) => {
   const [openMenu, setOpenMenu] = useState(null);
   const [showDeleteModal, setShowDeleteModal] = useState(null)
+  const {budgets, setBudgets} = useAppContext()
 
   const handleMenuClick = (id) => {
     setOpenMenu((prevId) => (prevId === id ? null : id));
@@ -24,7 +26,7 @@ const BudgetCard = ({budget}) => {
           <div className='size-3 rounded-full bg-blue-900'></div>
           <h2 className='text-2xl font-semibold'>{budget.category.charAt(0).toUpperCase() + budget.category.slice(1)}</h2>
         </div>
-        <button onClick={() => handleMenuClick(budget.id)} className="flex gap-0.5 cursor-pointer transition duration-200 relative">
+        <div onClick={() => handleMenuClick(budget.id)} className="flex gap-0.5 cursor-pointer transition duration-200 relative">
           <div className="flex gap-0.5 active:scale-150 transition duration-200">
             <div className="size-1 rounded-full bg-black"></div>
             <div className="size-1 rounded-full bg-black"></div>
@@ -40,12 +42,12 @@ const BudgetCard = ({budget}) => {
               />
             </div>
           )}
-        </button>
+        </div>
         {
           showDeleteModal === budget.id &&
           <DeleteModal
-          //onBack={}
-          //onDelete={}
+          budget={budget}
+          setShowDeleteModal={setShowDeleteModal}
           confirmationParagraph="Are you sure you want to delete this budget? This action cannot be reversed, and all the data inside it will be removed forever."
           confirmDeleteLabel="Yes, Confirm deletion" 
           goBackLabel="No, go back"

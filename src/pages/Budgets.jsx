@@ -28,7 +28,7 @@ const Budgets = () => {
             </div>
           ) : (
             budgets.map(budget => (
-              <BudgetCard key={budget.id} budget={budget} />
+              <BudgetCard key={budget.id} budget={budget} setBudgets={setBudgets}/>
             ))
           )
         }

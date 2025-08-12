@@ -8,12 +8,12 @@ export default function ActionButtons({id, onEdit, onDelete, editLabel, deleteLa
           {editLabel}
         </button>
         <button
-          onClick={onDelete(id)}
+          onClick={() => onDelete(id)}
           className=" py-3 text-red-500 text-[12px] font-semibold cursor-pointer hover:text-sm"
         >
           {deleteLabel}
         </button>
       </div>
     );
-  }
+} 
   
