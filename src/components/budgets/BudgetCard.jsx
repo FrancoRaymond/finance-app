@@ -6,7 +6,6 @@ import { useAppContext } from '../../context/context';
 const BudgetCard = ({budget, setBudget}) => {
   const [openMenu, setOpenMenu] = useState(null);
   const [showDeleteModal, setShowDeleteModal] = useState(null)
-  const {budgets, setBudgets} = useAppContext()
 
   const handleMenuClick = (id) => {
     setOpenMenu((prevId) => (prevId === id ? null : id));
@@ -23,7 +22,7 @@ const BudgetCard = ({budget, setBudget}) => {
     <div key={budget.id} className='bg-white w-full p-5 rounded-md'>
       <div className='flex justify-between items-center'>
         <div className='flex items-center gap-3.5'>
-          <div className='size-3 rounded-full bg-blue-900'></div>
+          <div className='size-3 rounded-full' style={{ backgroundColor: budget.theme }}></div>
           <h2 className='text-2xl font-semibold'>{budget.category.charAt(0).toUpperCase() + budget.category.slice(1)}</h2>
         </div>
         <div onClick={() => handleMenuClick(budget.id)} className="flex gap-0.5 cursor-pointer transition duration-200 relative">
@@ -57,10 +56,10 @@ const BudgetCard = ({budget, setBudget}) => {
       </div>
       <span className='text-gray-400'>Maximum of R{budget.amount}</span>
       <div className='h-3 w-full p-0.5 rounded-md bg-gray-200 mt-5'>
-        <div className={`bg-blue-900 h-full w-[60%] rounded-md`}></div>
+        <div className={`h-full w-[60%] rounded-md`} style={{ backgroundColor: budget.theme }}></div>
       </div>
       <div className='grid grid-cols-2 mt-5 py-2'>
-        <div className='flex flex-col px-8 border-l-4 border-blue-900 rounded-md'>
+        <div className='flex flex-col px-8 border-l-4 rounded-md' style={{ borderLeft: `5px solid ${budget.theme}` }}>
           <p className='text-gray-500'>Spent</p>
           <span className='font-semibold'>R900.00</span>
         </div>
@@ -76,7 +75,7 @@ const BudgetCard = ({budget, setBudget}) => {
         </div>
         <div className='mt-3'>
           <div className='flex items-center py-1 last:pb-0 last:border-0 border-b border-gray-200'>
-            <div className='size-7 rounded-full bg-blue-900'></div>
+            <div className='size-7 rounded-full' style={{ backgroundColor: budget.theme }}></div>
             <h3 className='font-semibold grow ml-5'>Services</h3>
             <div>
               <p className={`font-semibold text-cyan-800`}>R500</p>
