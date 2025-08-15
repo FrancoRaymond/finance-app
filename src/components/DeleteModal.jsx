@@ -4,7 +4,8 @@ export default function DeleteModal(
     {
         budget, 
         onBack, 
-        onDelete, 
+        onDelete,
+        confirmDelete, 
         confirmationParagraph, 
         confirmDeleteLabel,
         goBackLabel, 
@@ -20,7 +21,7 @@ export default function DeleteModal(
                 </div>
                 <p className='text-sm text-gray-400'>{confirmationParagraph}</p>
                 <div className='flex items-center gap-5 ml-auto'>
-                    <button className="bg-red-400 hover:bg-red-300 py-2.5 text-sm font-semibold px-3 text-white rounded-md transition duration-200 cursor-pointer">{confirmDeleteLabel}</button>
+                    <button onClick={() => confirmDelete(budget.id)} className="bg-red-400 hover:bg-red-300 py-2.5 text-sm font-semibold px-3 text-white rounded-md transition duration-200 cursor-pointer">{confirmDeleteLabel}</button>
                     <button onClick={() => setShowDeleteModal(null)} className="bg-gray-200 hover:bg-gray-300 py-2.5 px-3 text-sm font-semibold text-black rounded-md transition duration-200 cursor-pointer">{goBackLabel}</button>
                 </div>
             </div>

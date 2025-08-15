@@ -15,7 +15,7 @@ const ThemeInput = ({formData, handleInputChanges}) => {
         <option value="#6B7280">Grey</option>
         <option value="#008B8B">Cyan</option>
         <option value="#CC5500">Orange</option>
-        <option value="#247976">Green</option>
+        <option value="#5EFF00">Green</option>
         <option value="#83c8d8">Blue</option>
         <option value="#B8860B">Yellow</option>
         <option value="#f16b76">Crimson</option>
