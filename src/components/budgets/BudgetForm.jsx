@@ -8,7 +8,6 @@ import ThemeInput from './ThemeInput'
 const BudgetForm = ({setShowBudgetForm}) => {
   const {budgets, setBudgets} = useAppContext()
   const [formData, setFormData] = useState({category: "", amount: "", theme: ""})
-  const [chosenColor, setChosenColor] = useState([])
 
 
   const handleInputChanges = (e) => {
@@ -24,7 +23,7 @@ const BudgetForm = ({setShowBudgetForm}) => {
 
     const newBudget = {
       id: Date.now(),
-      category: formData.category,
+      category: formData.category.charAt(0).toUpperCase() + formData.category.slice(1),
       amount: parseFloat(formData.amount),
       theme: formData.theme
     }
@@ -41,7 +40,6 @@ const BudgetForm = ({setShowBudgetForm}) => {
     
     setBudgets((prev) => [...prev, newBudget])
     setShowBudgetForm(false)    
- 
   }
 
   return (
@@ -49,23 +47,45 @@ const BudgetForm = ({setShowBudgetForm}) => {
       <div className='bg-white max-w-md w-full p-5 rounded-md'>
         <div className='flex justify-between items-center mb-5'>
           <p className='font-semibold text-md text-[1rem]'>Add new Budget</p>
-          <button onClick={() => setShowBudgetForm(false)}><img src={close} alt="" className='size-5 cursor-pointer'/></button>
+          <button 
+            onClick={() => setShowBudgetForm(false)}
+          >
+            <img 
+              src={close} 
+              alt="" 
+              className='size-5 cursor-pointer'
+            />
+          </button>
         </div>
         <p className='text-sm text-gray-400 mb-4'>Choose a category to set a spending budget. These categories can help you monitor spending.</p>
-        <form action="" onSubmit={handleSubmit} className='text-[15px] flex flex-col'>
+        <form 
+          action="" 
+          onSubmit={handleSubmit} 
+          className='text-[15px] flex flex-col'
+        >
           <label htmlFor="category" className='text-sm font-semibold text-gray-400 mt-2.5'>Category</label>
 
-          <CategoryInput formData={formData} handleInputChanges={handleInputChanges} />
+          <CategoryInput 
+            formData={formData} 
+            handleInputChanges={handleInputChanges} 
+          />
 
           <label htmlFor="amount" className='text-sm font-semibold text-gray-400 mt-2.5'>Maximum spend</label>
 
-          <AmountInput formData={formData} handleInputChanges={handleInputChanges} />
+          <AmountInput 
+            formData={formData} 
+            handleInputChanges={handleInputChanges} 
+          />
 
           <label htmlFor="theme" className='text-sm font-semibold text-gray-400 mt-2.5'>Theme</label>
 
-          <ThemeInput formData={formData} handleInputChanges={handleInputChanges} />
+          <ThemeInput 
+            formData={formData} 
+            handleInputChanges={handleInputChanges} 
+          />
 
           <button type='submit' className='bg-gray-950 mt-2.5 cursor-pointer hover:bg-gray-700 py-2.5 rounded-md text-white w-full'>Submit</button>
+
         </form>
       </div>
     </div>

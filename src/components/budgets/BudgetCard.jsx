@@ -24,7 +24,7 @@ const BudgetCard = ({budget, setBudgets}) => {
       <div className='flex justify-between items-center'>
         <div className='flex items-center gap-3.5'>
           <div className='size-3 rounded-full' style={{ backgroundColor: budget.theme }}></div>
-          <h2 className='text-lg font-semibold'>{budget.category.charAt(0).toUpperCase() + budget.category.slice(1)}</h2>
+          <h2 className='text-lg font-semibold'>{budget.category}</h2>
         </div>
         <div onClick={() => handleMenuClick(budget.id)} className="flex gap-0.5 cursor-pointer transition duration-200 relative">
           <div className="flex gap-0.5 active:scale-150 transition duration-200">
