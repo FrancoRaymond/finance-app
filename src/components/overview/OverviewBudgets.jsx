@@ -17,7 +17,7 @@ const { budgets } = useAppContext()
         { 
           budgets.slice(0, 4).map((budget, index) => (
             <div key={budget.id} className='flex flex-col gap-1 py-1 px-2.5 border-l-4 rounded-md'  style={{ borderColor: budget.theme }}>
-              <span className='text-gray-400 text-sm'>{budget.category}</span>
+              <span className='text-gray-400 text-sm'>{budget.category.charAt(0).toUpperCase() + budget.category.slice(1)}</span>
               <span className='text-sm font-semibold'>R{budget.amount}</span>
             </div>
           ))

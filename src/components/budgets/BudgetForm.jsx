@@ -1,13 +1,27 @@
-import React,{useState} from 'react'
+import React,{useState, useEffect} from 'react'
 import close from '../../assets/images/icon-close.svg'
 import { useAppContext } from '../../context/context'
 import CategoryInput from './CategoryInput'
 import AmountInput from './AmountInput'
 import ThemeInput from './ThemeInput'
 
-const BudgetForm = ({setShowBudgetForm}) => {
+const BudgetForm = ({setShowBudgetForm, setEditingBudget, editingBudget}) => {
   const {budgets, setBudgets} = useAppContext()
-  const [formData, setFormData] = useState({category: "", amount: "", theme: ""})
+  const [formData, setFormData] = useState({
+    category: editingBudget ? editingBudget.category : "",
+    amount: editingBudget ? editingBudget.amount : "",
+    theme: editingBudget ? editingBudget.theme : "",
+  });
+
+  useEffect(() => {
+    if (editingBudget) {
+      setFormData({
+        category: editingBudget.category,
+        amount: editingBudget.amount,
+        theme: editingBudget.theme,
+      });
+    }
+  }, [editingBudget]);
 
 
   const handleInputChanges = (e) => {
@@ -19,29 +33,41 @@ const BudgetForm = ({setShowBudgetForm}) => {
   }
 
   const handleSubmit = (e) => {
-    e.preventDefault()
-
-    const newBudget = {
-      id: Date.now(),
-      category: formData.category.charAt(0).toUpperCase() + formData.category.slice(1),
+    e.preventDefault();
+  
+    const updatedBudget = {
+      id: editingBudget ? editingBudget.id : Date.now(),
+      category: formData.category,
       amount: parseFloat(formData.amount),
-      theme: formData.theme
-    }
-
-    if (budgets.some((b) => b.theme === newBudget.theme)) {
-      alert(`The theme "${newBudget.theme}" is already used. Please choose a different one.`);
-      return;
+      theme: formData.theme,
+    };
+  
+    if (editingBudget) {
+      
+      setBudgets((prev) =>
+        prev.map((b) => (b.id === editingBudget.id ? updatedBudget : b))
+      );
+      setEditingBudget(null);
+    } else {
+      
+      if (budgets.some((b) => b.theme === updatedBudget.theme)) {
+        alert(`The theme "${updatedBudget.theme}" is already used. Please choose a different one.`);
+        return;
+      }
+  
+      if (budgets.some((b) => b.category.toLowerCase() === updatedBudget.category.toLowerCase())) {
+        alert(`The category "${updatedBudget.category}" already exists. Please choose a different one.`);
+        return;
+      }
+  
+      setBudgets((prev) => [...prev, updatedBudget]);
     }
   
-    if (budgets.some((b) => b.category.toLowerCase() === newBudget.category.toLowerCase())) {
-      alert(`The category "${newBudget.category}" already exists. Please choose a different one.`);
-      return;
-    }
-    
-    setBudgets((prev) => [...prev, newBudget])
-    setShowBudgetForm(false)    
-  }
-
+    setFormData({ category: "", amount: "", theme: "" });
+    setEditingBudget(null);
+    setShowBudgetForm(false);
+  };
+  
   return (
     <div className='budgetForm fixed flex items-center transition-all duration-500 justify-center top-0 left-0 w-full h-screen'>
       <div className='bg-white max-w-md w-full p-5 rounded-md'>
@@ -84,7 +110,7 @@ const BudgetForm = ({setShowBudgetForm}) => {
             handleInputChanges={handleInputChanges} 
           />
 
-          <button type='submit' className='bg-gray-950 mt-2.5 cursor-pointer hover:bg-gray-700 py-2.5 rounded-md text-white w-full'>Submit</button>
+          <button type='submit' className='bg-gray-950 mt-2.5 cursor-pointer hover:bg-gray-700 py-2.5 rounded-md text-white w-full'>{editingBudget ? "Update" : "Submit"}</button>
 
         </form>
       </div>
