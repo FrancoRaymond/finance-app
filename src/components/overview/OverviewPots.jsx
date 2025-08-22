@@ -1,12 +1,13 @@
 import React from 'react'
 import pots from '../../assets/images/pots.svg'
+import { Link } from 'react-router-dom'
 
 const OverviewPots = () => {
   return (
     <div className='p-4 bg-white rounded-md lg:col-span-3 lg:row-span-2'>
       <div className='flex items-center justify-between'>
         <h2 className='text-lg font-semibold'>Pots</h2>
-        <button className='text-sm text-gray-500 cursor-pointer'>See Details</button>
+        <Link  to="/pots" className='text-sm text-gray-500 cursor-pointer'>See Details</Link>
       </div>
       <div className='sm:grid sm:grid-cols-2 gap-5 items-center'>   
         <div className='mt-4 bg-gray-200 rounded-md p-4 flex items-center gap-5 sm:h-full'>

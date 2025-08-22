@@ -1,11 +1,12 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 const OverviewRecurringBills = () => {
   return (
     <div className='p-4 bg-white rounded-md lg:col-span-2 lg:row-span-2'>
       <div className='flex items-center justify-between'>
         <h2 className='text-lg font-semibold'>Recurring bills</h2>
-        <button className='text-sm text-gray-500 cursor-pointer'>See Details</button>
+        <Link  to="/recurringbills" className='text-sm text-gray-500 cursor-pointer'>See Details</Link>
       </div>
       <div className='mt-5 flex flex-col gap-4'>
         <div className='flex justify-between p-4 border-l-4 border-amber-700 rounded-md bg-gray-200'>
