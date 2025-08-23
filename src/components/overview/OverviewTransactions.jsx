@@ -13,7 +13,7 @@ const OverviewTransactions = () => {
       </div>
       <div className='mt-4'>
         {
-          transactions.map(transaction => (
+          transactions.slice(0, 5).map(transaction => (
             <div key={transaction.id} className='flex items-center py-1 last:pb-0 last:border-0 border-b border-gray-200'>
               <img src={transaction.image} alt="" className='size-7 rounded-full'/>
               <h3 className='font-semibold grow ml-5'>{transaction.name}</h3>

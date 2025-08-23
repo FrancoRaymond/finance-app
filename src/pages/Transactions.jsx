@@ -1,6 +1,7 @@
 import React,{ useEffect, useState } from 'react'
 import TransactionForm from '../components/transactions/TransactionForm'
 import { transactions } from '../assets/data/transactions.js'
+import Pagination from '../components/Pagination.jsx'
 
 
 const Transactions = () => {
@@ -48,7 +49,7 @@ const Transactions = () => {
 
 
   return (
-    <div className='py-5 px-2 md:px-5 w-full'>
+    <div className='py-5 px-2 md:px-5 w-full mb-10 sm:mb-14 md:mb-0'>
       {showTransactionForm && <TransactionForm setShowTransactionForm={setShowTransactionForm} />}
       <div className='flex items-center justify-between'>
         <h2 className='font-semibold text-2xl sm:text-3xl'>Transactions</h2>
@@ -79,35 +80,9 @@ const Transactions = () => {
             </select>
           </div>  
         </div>
-        <div className='overflow-x-auto'>
-          <table className='min-w-full table-auto mt-6 text-left flex flex-col gap-3'>
-            <thead>
-              <tr className='text-sm font-semibold text-center text-gray-400 px-2 items-center grid grid-cols-4 py-2 borde-b border-gray-400'>
-                <th>Recepient / Sender</th>
-                <th>Category</th>
-                <th>Transactiion Date</th>
-                <th>Amount</th>
-              </tr>
-            </thead>
-            <tbody className='flex flex-col gap-3'>
-              {
-                filteredTransactions.map(transaction => (
-                  <tr key={transaction.id} className='text-sm text-center px-2 grid grid-cols-4 items-center'>
-                    <td className='flex items-center gap-3'><img src={transaction.image} alt="" className='size-7 rounded-full'/> {transaction.name}</td>
-                    <td>Education</td>
-                    <td>{transaction.date}</td>
-                    <td>R{transaction.amount}</td>
-                  </tr>
-                ))
-              }
-            </tbody>
-          </table>
-        </div>
-        <div className='flex justify-between items-center my-8'>
-          <button className='bg-gray-200 text-gray-400 px-2 py-1 cursor-pointer rounded-md'>Prev</button>
-          <span className='px-1.5 py-1 bg-black text-white rounded-md'>1</span>
-          <button className='bg-gray-200 text-gray-400 px-2 py-1 cursor-pointer rounded-md'>Next</button>
-        </div>
+
+        <Pagination filteredTransactions={filteredTransactions}/>
+        
       </div>
     </div>
   )
