@@ -4,7 +4,7 @@ import { useAppContext } from '../context/context'
 
 
 const Chart = () => {
-    const { budgets } = useAppContext()
+    const { budgets, addedTransactions } = useAppContext()
     const limit = budgets.length > 0 ? budgets.reduce((acc, val) => acc + val.amount, 0) : 0;
 
   return (

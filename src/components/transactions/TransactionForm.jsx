@@ -4,6 +4,7 @@ import close from '../../assets/images/icon-close.svg'
 
 const TransactionForm = ({setShowTransactionForm}) => {
   const { addedTransactions, setAddedTransactions } = useAppContext()
+  const [amountError, setAmountError ] = useState(false)
   const [formData, setFormData] = useState(
     {
       name: "", 
@@ -23,20 +24,24 @@ const TransactionForm = ({setShowTransactionForm}) => {
   }
 
   const handleSubmit = (e) => {
-    e.preventDefault()
-    setShowTransactionForm(false)
+    e.preventDefault() 
    
     let formattedAmount = formData.amount.trim()
   
-    if (!formattedAmount.startsWith("+") && !formattedAmount.startsWith("-")) {
-      formattedAmount = "+" + formattedAmount
+    if (
+      (!formattedAmount.startsWith("+") && !formattedAmount.startsWith("-")) || 
+      isNaN(parseInt(formattedAmount.slice(1)))
+    ) {
+      setAmountError(true);
+      return;
+    } else {
+      setAmountError(false);
     }
   
     const newTransaction = {
       ...formData,
       amount: formattedAmount
     }
-  
     setAddedTransactions((prev) => {
       const updated = [...prev, newTransaction]
       return updated
@@ -49,8 +54,9 @@ const TransactionForm = ({setShowTransactionForm}) => {
       amount: "",
       recurring: false
     })
+    setShowTransactionForm(false)
   }
-
+  console.log(addedTransactions)
   return (
     <div className='transactionForm fixed flex items-center transition-all duration-500 justify-center top-0 left-0 w-full h-screen'>
       <div className='bg-white max-w-md w-full p-5 rounded-md'>
@@ -107,7 +113,7 @@ const TransactionForm = ({setShowTransactionForm}) => {
           </select>
           <label htmlFor="amount" className='text-sm font-semibold text-gray-400 mt-2.5'>Amount</label>
           <input 
-            type="number" 
+            type="text" 
             id='amount'
             value={formData.amount} 
             onChange={handleInputChanges} 
@@ -116,6 +122,7 @@ const TransactionForm = ({setShowTransactionForm}) => {
             placeholder='e.g R1000' 
             className='outline-none mt-1.5 border rounded-md py-2 px-3 border-gray-400'
           />
+          { amountError && <span className='text-[12px] text-red-600'>please start with + or - to indicate credit or derbit</span>}
           <div className='flex items-center gap-3 my-2.5'>
             <label htmlFor="recurring" className='text-gray-400'>Recurring</label>
             <input 
