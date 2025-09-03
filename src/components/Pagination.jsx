@@ -39,9 +39,9 @@ const Transactions = ({ filteredTransactions }) => {
                 currentTransactions.map(transaction => (
                   <tr key={transaction.id} className='text-sm text-center px-2 grid grid-cols-4 items-center'>
                     <td className='flex items-center gap-3'><img src={transaction.image} alt="" className='size-7 rounded-full'/> {transaction.name}</td>
-                    <td>Education</td>
+                    <td>{transaction.category}</td>
                     <td>{transaction.date}</td>
-                    <td>R{transaction.amount}</td>
+                    <td>{transaction.amount[0]}R{transaction.amount.slice(1)}</td>
                   </tr>
                 ))
               }

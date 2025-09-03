@@ -1,6 +1,6 @@
 import React,{ useEffect, useState } from 'react'
+import { useAppContext } from '../context/context.jsx'
 import TransactionForm from '../components/transactions/TransactionForm'
-import { transactions } from '../assets/data/transactions.js'
 import Pagination from '../components/Pagination.jsx'
 
 
@@ -9,10 +9,11 @@ const Transactions = () => {
   const [searchTerm, setSearchTerm] = useState("")
   const [sortType, setSortType] = useState("Latest");
   const [categoryFilter, setCategoryFilter] = useState("all");
+  const { addedTransactions } = useAppContext()
   const [filteredTransactions, setFilteredTransactions] = useState([])
 
   useEffect(() => {
-    let result = [...transactions];
+    let result = [...addedTransactions];
 
   if (searchTerm) {
     result = result.filter(trans =>
@@ -45,7 +46,7 @@ const Transactions = () => {
     }
 
     setFilteredTransactions(result);
-  }, [searchTerm, sortType, categoryFilter, transactions])
+  }, [searchTerm, sortType, categoryFilter, addedTransactions])
 
 
   return (

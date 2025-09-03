@@ -1,12 +1,21 @@
-import React,{useState, useEffect} from 'react'
+import React,{useState} from 'react'
 import { useAppContext } from '../../context/context'
 import close from '../../assets/images/icon-close.svg'
+import icon1 from '../../assets/images/Logo-1.jpg'
+import icon3 from '../../assets/images/Logo-3.jpg'
+import icon4 from '../../assets/images/Logo-4.jpg'
+import icon5 from '../../assets/images/Logo-5.jpg'
+import icon6 from '../../assets/images/Logo-6.jpg'
+import icon8 from '../../assets/images/Logo-8.jpg'
 
 const TransactionForm = ({setShowTransactionForm}) => {
   const { addedTransactions, setAddedTransactions } = useAppContext()
   const [amountError, setAmountError ] = useState(false)
+  const images = [icon1, icon3, icon4, icon5, icon6, icon6, icon8]
   const [formData, setFormData] = useState(
     {
+      id: crypto.randomUUID(),
+      image: images[Math.floor(Math.random() * images.length)],
       name: "", 
       date: "", 
       category: "", 
@@ -28,10 +37,7 @@ const TransactionForm = ({setShowTransactionForm}) => {
    
     let formattedAmount = formData.amount.trim()
   
-    if (
-      (!formattedAmount.startsWith("+") && !formattedAmount.startsWith("-")) || 
-      isNaN(parseInt(formattedAmount.slice(1)))
-    ) {
+    if((!formattedAmount.startsWith("+") && !formattedAmount.startsWith("-")) || isNaN(parseInt(formattedAmount.slice(1)))) {
       setAmountError(true);
       return;
     } else {
@@ -48,6 +54,7 @@ const TransactionForm = ({setShowTransactionForm}) => {
     })
   
     setFormData({
+      image: images[Math.floor(Math.random() * images.length)],
       name: "",
       date: "",
       category: "",
@@ -56,7 +63,7 @@ const TransactionForm = ({setShowTransactionForm}) => {
     })
     setShowTransactionForm(false)
   }
-  console.log(addedTransactions)
+  
   return (
     <div className='transactionForm fixed flex items-center transition-all duration-500 justify-center top-0 left-0 w-full h-screen'>
       <div className='bg-white max-w-md w-full p-5 rounded-md'>

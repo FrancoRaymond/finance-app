@@ -12,12 +12,12 @@ const Chart = () => {
         <div className="relative flex justify-center items-center w-fitrounded-full">
             <PieChart width={250} height={250}>
                 <Pie
-                data={budgets}
-                cx="50%" cy="50%"
-                labelLine={false}
-                outerRadius={110}
-                fill="#8884d8"
-                dataKey="amount"
+                    data={budgets}
+                    cx="50%" cy="50%"
+                    labelLine={false}
+                    outerRadius={110}
+                    fill="#8884d8"
+                    dataKey="amount"
                 >
                 {budgets.map((budget, index) => (
                     <Cell key={`cell-${index}`} fill={budget.theme} className='border'/>
