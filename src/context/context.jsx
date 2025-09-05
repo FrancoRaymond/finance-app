@@ -26,9 +26,16 @@ const AppProvider = ({ children }) => {
     localStorage.setItem("budgets", JSON.stringify(budgets))
   }, [budgets])
 
+//POTS LOCAL STORAGE
+  const [pots, setPots] = useState(() => {
+    const storedPots = localStorage.getItem("pots");
+    return storedPots ? JSON.parse(storedPots) : [];
+  })
+  useEffect(() => {
+    localStorage.setItem("pots", JSON.stringify(pots))
+  }, [pots])
 
-  const [pots, setPots] = useState([])
-  //localStorage.removeItem('addedTransactions')
+  //localStorage.removeItem('pots')
  
 
   return (
