@@ -2,9 +2,27 @@ import React,{useEffect, useState} from 'react'
 import { useAppContext } from '../../context/context'
 import close from '../../assets/images/icon-close.svg'
 
-const PotsForm = ({setShowPotForm}) => {
+const PotsForm = ({setShowPotForm, editingPot, setEditingPot}) => {
   const { setPots, pots } = useAppContext()
-  const [formData, setFormData] = useState({id: Date.now(), potName: "", amount: "", theme: ""})
+  const [formData, setFormData] = useState(
+    {
+      id: editingPot ? editingPot.id : Date.now(), 
+      potName: editingPot ? editingPot.potName : "",
+      amount: editingPot ? editingPot.amount : "", 
+      theme: editingPot ? editingPot.theme : ""
+    }
+  )
+
+  useEffect(() => {
+    if (editingPot) {
+      setFormData({
+        id: editingPot.id,
+        potName: editingPot.potName,
+        amount: editingPot.amount,
+        theme: editingPot.theme,
+      });
+    }
+  }, [editingPot]);
 
   const handleInputChanges = (e) => {
     const {name, type, value, checked} = e.target
@@ -16,7 +34,35 @@ const PotsForm = ({setShowPotForm}) => {
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    setPots((prev) => [...prev, formData])
+
+    const updatedPot = {
+      id: editingPot ? editingPot.id : Date.now(),
+      potName: formData.potName,
+      amount: parseFloat(formData.amount),
+      theme: formData.theme,
+    };
+  
+    if (editingPot) {
+      
+      setPots((prev) =>
+        prev.map((b) => (b.id === editingPot.id ? updatedPot : b))
+      );
+      setEditingPot(null);
+    } else {
+      
+      if (pots.some((b) => b.theme === updatedPot.theme)) {
+        alert(`The theme "${updatedPot.theme}" is already used. Please choose a different one.`);
+        return;
+      }
+  
+      if (pots.some((b) => b.potName.toLowerCase() === updatedPot.potName.toLowerCase())) {
+        alert(`The pot name "${updatedPot.potName}" already exists. Please choose a different one.`);
+        return;
+      }
+  
+      setPots((prev) => [updatedPot, ...prev]);
+    }
+   
     setShowPotForm(false)
     setFormData({id: Date.now(), potName: "", amount: "", theme: ""})
   }
@@ -28,7 +74,7 @@ const PotsForm = ({setShowPotForm}) => {
             <p className='font-semibold text-md text-[1rem]'>Add new Pot</p>
             <button onClick={() => setShowPotForm(false)}><img src={close} alt="" className='size-5 cursor-pointer'/></button>
           </div>
-          <p className='text-sm text-gray-400 mb-4'>Choose a category to set a spending budget. These categories can help you monitor spending.</p>
+          <p className='text-sm text-gray-400 mb-4'>Create a pot to set savings targets. These can help keep you on track as you save for special purchases.</p>
           <form action="" onSubmit={handleSubmit} className='text-[15px] flex flex-col'>
             <label htmlFor="potName" className='text-sm font-semibold text-gray-400 mt-2.5'>Pot Name</label>
             <input 
@@ -74,7 +120,7 @@ const PotsForm = ({setShowPotForm}) => {
               <option value="#8B4513">Brown</option>
               <option value="#8b008b">Magenta</option>
             </select>
-            <button type='submit' className='bg-gray-950 mt-2.5 cursor-pointer hover:bg-gray-700 py-2.5 rounded-md text-white w-full'>Submit</button>
+            <button type='submit' className='bg-gray-950 mt-2.5 cursor-pointer hover:bg-gray-700 py-2.5 rounded-md text-white w-full'>{editingPot ? "Update" : "Submit"}</button>
           </form>
       </div>
     </div>

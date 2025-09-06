@@ -1,8 +1,10 @@
 import React,{useState} from 'react'
 import EditAndDelete from '../EditAndDelete'
+import DeleteModal from '../DeleteModal';
 
-const PotCard = ({pot}) => {
+const PotCard = ({pot, setPots, handleEdit}) => {
     const [openMenu, setOpenMenu] = useState(null);
+    const [showDeleteModal, setShowDeleteModal] = useState(null);
 
     const handleMenuClick = (id) => {
         setOpenMenu((prevId) => (prevId === id ? null : id));
@@ -10,14 +12,14 @@ const PotCard = ({pot}) => {
 
     const handleDeleteClick = (id) => {
         setShowDeleteModal((prevId) => (prevId === id ? null : id));
-      };
+    };
     
-      const confirmDelete = (id) => {
+    const confirmDelete = (id) => {
         setPots((prevPots) => prevPots.filter(prev => prev.id !== id))
-      }
+    }
 
   return (
-    <div key={pot.id} className='bg-white p-4 rounded-md'>
+    <div className='bg-white p-4 rounded-md'>
         <div className='flex justify-between items-center'>
             <div className='flex items-center gap-3.5'>
                 <div className={`size-3 rounded-full`} style={{ backgroundColor: pot.theme }}></div>
@@ -34,13 +36,24 @@ const PotCard = ({pot}) => {
                     <EditAndDelete
                         editLabel="Edit pot"
                         deleteLabel="Delete pot"
-                        pot={pot}
+                        data={pot}
                         handleDeleteClick={handleDeleteClick}
-                        //handleEdit={handleEdit}
+                        handleEdit={handleEdit}
                     />
                     </div>
                 )}
             </div>
+            {
+                showDeleteModal === pot.id &&
+                <DeleteModal
+                    data={pot}
+                    confirmDelete={confirmDelete}
+                    setShowDeleteModal={setShowDeleteModal}
+                    confirmationParagraph="Are you sure you want to delete this pot? This action cannot be reversed, and all the data inside it will be removed forever."
+                    confirmDeleteLabel="Yes, Confirm deletion" 
+                    goBackLabel="No, go back"
+                />
+            }
         </div>
         <div className='flex items-center justify-between mt-4'>
             <span className='text-gray-400'>Total spent</span>
@@ -53,9 +66,9 @@ const PotCard = ({pot}) => {
             <span>0.00%</span>
             <span>Target of R{pot.amount}</span>
         </div>
-        <div className='mb-3 mt-8 grid grid-cols-2 gap-6'>
-            <button className='rounded-md text-black bg-gray-200 hover:bg-white hover:border hover:border-gray-600 transition duration-200 cursor-pointer py-3 px-5 text-[1rem] font-semibold' >+ Add Money</button>
-            <button className='rounded-md text-black bg-gray-200 hover:bg-white hover:border hover:border-gray-600 transition duration-200 cursor-pointer py-3 px-5 text-[1rem] font-semibold' >Withdraw</button>
+        <div className='mb-3 mt-8 grid grid-cols-2 gap-6 text-sm'>
+            <button className='rounded-md text-black bg-gray-200 hover:bg-white hover:border hover:border-gray-600 transition duration-200 cursor-pointer py-2 px-5 font-semibold' >+ Add Money</button>
+            <button className='rounded-md text-black bg-gray-200 hover:bg-white hover:border hover:border-gray-600 transition duration-200 cursor-pointer py-2 px-5 font-semibold' >Withdraw</button>
         </div>
     </div>
   )

@@ -37,7 +37,7 @@ const BudgetCard = ({budget, setBudgets, handleEdit}) => {
               <EditAndDelete
                 editLabel="Edit Budget"
                 deleteLabel="Delete Budget"
-                budget={budget}
+                data={budget}
                 handleDeleteClick={handleDeleteClick}
                 handleEdit={handleEdit}
               />
