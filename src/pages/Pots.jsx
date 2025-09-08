@@ -2,11 +2,15 @@ import React,{useState} from 'react'
 import { useAppContext } from '../context/context'
 import PotsForm from '../components/pots/PotsForm'
 import PotCard from '../components/pots/PotCard'
+import AddMoneyOrWithdraw from '../components/pots/AddMoneyOrWithdraw'
 
 const Pots = () => {
   const [showPotForm, setShowPotForm] = useState(false)
   const { pots, setPots } = useAppContext()
   const [editingPot, setEditingPot] = useState(null);
+  const [showAddMoneyOrWithdrawModal, setShowAddMoneyOrWithdrawModal] = useState(false)
+  const [actionType, setActionType] = useState("")
+  const [potToEditId, setPotToEditId] = useState(null)
 
   const handleEdit = (pots) => {
     setEditingPot(pots);
@@ -35,10 +39,25 @@ const Pots = () => {
               pot={pot} 
               setPots={setPots} 
               handleEdit={handleEdit}
+              setPotToEditId={setPotToEditId}
+              setShowAddMoneyOrWithdrawModal={setShowAddMoneyOrWithdrawModal}
+              setActionType={setActionType}
             />
           ))
         }
-      </div>  
+      </div> 
+      {
+        showAddMoneyOrWithdrawModal && 
+        <AddMoneyOrWithdraw 
+          setShowAddMoneyOrWithdrawModal={setShowAddMoneyOrWithdrawModal}
+          actionType={actionType}
+          setActionType={setActionType}
+          pots={pots}
+          setPots={setPots}
+          potToEditId={potToEditId}
+          setPotToEditId={setPotToEditId}   
+        />
+      }
     </div>
   )
 }

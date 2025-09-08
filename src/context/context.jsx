@@ -5,6 +5,9 @@ const AppContext = createContext();
 
 
 const AppProvider = ({ children }) => {
+  const [balance, setBalance] = useState(0)
+  const [income, setIncome] = useState(0)
+  const [expenses, setExpenses] = useState(0)
 
 //TRANSACTIONS LOCAL STORAGE
 
@@ -37,10 +40,15 @@ const AppProvider = ({ children }) => {
 
   //localStorage.removeItem('pots')
  
-
   return (
     <AppContext.Provider value={
       {
+        balance, 
+        setBalance,
+        income, 
+        setIncome,
+        expenses, 
+        setExpenses,
         addedTransactions, 
         setAddedTransactions,
         budgets, 

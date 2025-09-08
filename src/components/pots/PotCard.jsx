@@ -2,7 +2,16 @@ import React,{useState} from 'react'
 import EditAndDelete from '../EditAndDelete'
 import DeleteModal from '../DeleteModal';
 
-const PotCard = ({pot, setPots, handleEdit}) => {
+const PotCard = (
+    {
+        pot, 
+        setPots, 
+        handleEdit, 
+        setPotToEditId, 
+        setShowAddMoneyOrWithdrawModal, 
+        setActionType
+    }
+) => {
     const [openMenu, setOpenMenu] = useState(null);
     const [showDeleteModal, setShowDeleteModal] = useState(null);
 
@@ -17,6 +26,14 @@ const PotCard = ({pot, setPots, handleEdit}) => {
     const confirmDelete = (id) => {
         setPots((prevPots) => prevPots.filter(prev => prev.id !== id))
     }
+
+    const handleAddOrWithdraw = (action, potId) => {
+        setActionType(action)
+        setPotToEditId(potId)
+        setShowAddMoneyOrWithdrawModal(true)
+    }
+
+   
 
   return (
     <div className='bg-white p-4 rounded-md'>
@@ -67,8 +84,8 @@ const PotCard = ({pot, setPots, handleEdit}) => {
             <span>Target of R{pot.amount}</span>
         </div>
         <div className='mb-3 mt-8 grid grid-cols-2 gap-6 text-sm'>
-            <button className='rounded-md text-black bg-gray-200 hover:bg-white hover:border hover:border-gray-600 transition duration-200 cursor-pointer py-2 px-5 font-semibold' >+ Add Money</button>
-            <button className='rounded-md text-black bg-gray-200 hover:bg-white hover:border hover:border-gray-600 transition duration-200 cursor-pointer py-2 px-5 font-semibold' >Withdraw</button>
+            <button onClick={() => handleAddOrWithdraw("add", pot.id)} className='rounded-md text-black bg-gray-200 hover:bg-white hover:border hover:border-gray-600 transition duration-200 cursor-pointer py-2 px-5 font-semibold' >+ Add Money</button>
+            <button onClick={() => handleAddOrWithdraw("withdraw", pot.id)} className='rounded-md text-black bg-gray-200 hover:bg-white hover:border hover:border-gray-600 transition duration-200 cursor-pointer py-2 px-5 font-semibold' >Withdraw</button>
         </div>
     </div>
   )
