@@ -3,7 +3,7 @@ import { useAppContext } from '../../context/context'
 import close from '../../assets/images/icon-close.svg'
 
 const PotsForm = ({setShowPotForm, editingPot, setEditingPot}) => {
-  const { setPots, pots } = useAppContext()
+  const { setPots, pots, setBalance } = useAppContext()
   const [formData, setFormData] = useState(
     {
       id: editingPot ? editingPot.id : Date.now(), 
@@ -47,6 +47,15 @@ const PotsForm = ({setShowPotForm, editingPot, setEditingPot}) => {
       setPots((prev) =>
         prev.map((b) => (b.id === editingPot.id ? updatedPot : b))
       );
+
+      setBalance((prev) => {
+        const oldAmount = editingPot.amount;          
+        const newAmount = updatedPot.amount;          
+        const difference = newAmount - oldAmount;     
+    
+        return prev - difference;                     
+      });
+
       setEditingPot(null);
     } else {
       
@@ -59,6 +68,7 @@ const PotsForm = ({setShowPotForm, editingPot, setEditingPot}) => {
         alert(`The pot name "${updatedPot.potName}" already exists. Please choose a different one.`);
         return;
       }
+      setBalance((prev) => prev - updatedPot.amount)
   
       setPots((prev) => [updatedPot, ...prev]);
     }

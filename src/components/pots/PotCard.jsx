@@ -1,4 +1,5 @@
 import React,{useState} from 'react'
+import { useAppContext } from '../../context/context';
 import EditAndDelete from '../EditAndDelete'
 import DeleteModal from '../DeleteModal';
 
@@ -14,6 +15,7 @@ const PotCard = (
 ) => {
     const [openMenu, setOpenMenu] = useState(null);
     const [showDeleteModal, setShowDeleteModal] = useState(null);
+    const { balance, setBalance } = useAppContext()
 
     const handleMenuClick = (id) => {
         setOpenMenu((prevId) => (prevId === id ? null : id));
@@ -24,6 +26,7 @@ const PotCard = (
     };
     
     const confirmDelete = (id) => {
+        setBalance((prev) => prev + pot.amount)
         setPots((prevPots) => prevPots.filter(prev => prev.id !== id))
     }
 
@@ -31,9 +34,7 @@ const PotCard = (
         setActionType(action)
         setPotToEditId(potId)
         setShowAddMoneyOrWithdrawModal(true)
-    }
-
-   
+    } 
 
   return (
     <div className='bg-white p-4 rounded-md'>
@@ -42,7 +43,7 @@ const PotCard = (
                 <div className={`size-3 rounded-full`} style={{ backgroundColor: pot.theme }}></div>
                 <h2 className='text-xl font-semibold'>{pot.potName}</h2>
             </div>
-            <div onClick={() => handleMenuClick(pot.id)} className="flex gap-0.5 cursor-pointer transition duration-200 relative">
+            <div onClick={() => handleMenuClick(pot.id)} className="flex p-2 gap-0.5 cursor-pointer transition duration-200 relative">
                 <div className="flex gap-0.5 active:scale-150 transition duration-200">
                     <div className="size-1 rounded-full bg-black"></div>
                     <div className="size-1 rounded-full bg-black"></div>
