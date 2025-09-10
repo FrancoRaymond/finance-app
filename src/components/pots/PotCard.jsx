@@ -2,6 +2,7 @@ import React,{useState} from 'react'
 import { useAppContext } from '../../context/context';
 import EditAndDelete from '../EditAndDelete'
 import DeleteModal from '../DeleteModal';
+import { CurrencyFormatter } from '../../utils/CurrencyFormatter'
 
 const PotCard = (
     {
@@ -82,7 +83,7 @@ const PotCard = (
         </div>
         <div className='text-gray-600 flex justify-between text-sm mt-1'>
             <span>0.00%</span>
-            <span>Target of R{pot.amount}</span>
+            <span>Target of {CurrencyFormatter(pot.amount)}</span>
         </div>
         <div className='mb-3 mt-8 grid grid-cols-2 gap-6 text-sm'>
             <button onClick={() => handleAddOrWithdraw("add", pot.id)} className='rounded-md text-black bg-gray-200 hover:bg-white hover:border hover:border-gray-600 transition duration-200 cursor-pointer py-2 px-5 font-semibold' >+ Add Money</button>

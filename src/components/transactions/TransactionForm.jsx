@@ -2,16 +2,23 @@ import React,{useState} from 'react'
 import { useAppContext } from '../../context/context'
 import close from '../../assets/images/icon-close.svg'
 import icon1 from '../../assets/images/Logo-1.jpg'
+import icon2 from '../../assets/images/Logo-3.jpg'
 import icon3 from '../../assets/images/Logo-3.jpg'
 import icon4 from '../../assets/images/Logo-4.jpg'
 import icon5 from '../../assets/images/Logo-5.jpg'
 import icon6 from '../../assets/images/Logo-6.jpg'
+import icon7 from '../../assets/images/Logo-7.jpg'
 import icon8 from '../../assets/images/Logo-8.jpg'
+import icon9 from '../../assets/images/Logo-9.jpg'
+import icon10 from '../../assets/images/Logo-10.jpg'
+import icon11 from '../../assets/images/Logo-11.jpg'
+import icon12 from '../../assets/images/Logo-12.jpg'
+import icon13 from '../../assets/images/logo-13.jpg'
 
 const TransactionForm = ({setShowTransactionForm}) => {
   const { addedTransactions, setAddedTransactions } = useAppContext()
   const [amountError, setAmountError ] = useState(false)
-  const images = [icon1, icon3, icon4, icon5, icon6, icon6, icon8]
+  const images = [icon1, icon2, icon3, icon4, icon5, icon6, icon6, icon7, icon8, icon9, icon10, icon11, icon12, icon13]
   const [formData, setFormData] = useState(
     {
       id: crypto.randomUUID(),
