@@ -1,5 +1,6 @@
 import React,{useState} from 'react'
 import { useAppContext } from '../../context/context'
+import AmountInput from '../AmountInput'
 import close from '../../assets/images/icon-close.svg'
 import icon1 from '../../assets/images/Logo-1.jpg'
 import icon2 from '../../assets/images/Logo-3.jpg'
@@ -14,6 +15,8 @@ import icon10 from '../../assets/images/Logo-10.jpg'
 import icon11 from '../../assets/images/Logo-11.jpg'
 import icon12 from '../../assets/images/Logo-12.jpg'
 import icon13 from '../../assets/images/logo-13.jpg'
+import CategoryInput from '../CategoryInput'
+import NameInput from '../NameInput'
 
 const TransactionForm = ({setShowTransactionForm}) => {
   const { addedTransactions, setAddedTransactions } = useAppContext()
@@ -80,16 +83,11 @@ const TransactionForm = ({setShowTransactionForm}) => {
         </div>
         <form action="" onSubmit={handleSubmit} className='text-[15px] flex flex-col'>
           <label htmlFor="name" className='text-sm font-semibold text-gray-400'>Transaction name</label>
-          <input 
-            type="text" 
-            value={formData.name} 
-            onChange={handleInputChanges} 
-            name="name" 
-            id='name' 
+          <NameInput
+            placeholder="e.g Urban Studios" 
+            formData={formData} 
+            handleInputChanges={handleInputChanges} 
             maxLength={30}
-            required 
-            placeholder='e.g Urban Service Hub' 
-            className='outline-none mt-1.5 border rounded-md py-2 px-3 border-gray-400'
           />
           <span className='text-gray-400 ml-auto'>{30 - formData.name.length} Characters left</span>
           <label htmlFor="date" className='text-sm font-semibold text-gray-400 mt-2.5'>Transaction Date</label>
@@ -104,37 +102,15 @@ const TransactionForm = ({setShowTransactionForm}) => {
             className='outline-none mt-1.5 border rounded-md py-2 px-3 border-gray-400'
           />
           <label htmlFor="category" className='text-sm font-semibold text-gray-400 mt-2.5'>Category</label>
-          <select 
-            name="category" 
-            id='category'
-            value={formData.category} 
-            onChange={handleInputChanges}
-            required 
-            placeholder="Select a category" 
-            className='outline-none mt-1.5 border rounded-md py-2 px-3 border-gray-400'
-          >
-            <option value="">Select a category</option>
-            <option value="entertainment">Entertainment</option>
-            <option value="bills">Bills</option>
-            <option value="groceries">Groceries</option>
-            <option value="diningOut">Dining Out</option>
-            <option value="transportation">Transportation</option>
-            <option value="personalCare">Personal Care</option>
-            <option value="education">Education</option>
-            <option value="lifestyle">Lifestyle</option>
-            <option value="shopping">Shopping</option>
-            <option value="general">General</option>
-          </select>
+          <CategoryInput
+            formData={formData.category} 
+            handleInputChanges={handleInputChanges}
+          />
           <label htmlFor="amount" className='text-sm font-semibold text-gray-400 mt-2.5'>Amount</label>
-          <input 
+          <AmountInput 
             type="text" 
-            id='amount'
-            value={formData.amount} 
-            onChange={handleInputChanges} 
-            name="amount" 
-            required 
-            placeholder='e.g R1000' 
-            className='outline-none mt-1.5 border rounded-md py-2 px-3 border-gray-400'
+            formData={formData} 
+            handleInputChanges={handleInputChanges} 
           />
           { amountError && <span className='text-[12px] text-red-600'>please start with + or - to indicate credit or derbit</span>}
           <div className='flex items-center gap-3 my-2.5'>

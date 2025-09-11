@@ -1,9 +1,10 @@
 import React from 'react'
 
-const AmountInput = ({formData, handleInputChanges}) => {
+const AmountInput = ({ type, formData, handleInputChanges }) => {
   return (
+
     <input 
-        type="number" 
+        type={type}
         id='amount'
         value={formData.amount} 
         onChange={handleInputChanges} 

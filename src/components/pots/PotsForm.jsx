@@ -1,13 +1,16 @@
 import React,{useEffect, useState} from 'react'
 import { useAppContext } from '../../context/context'
 import close from '../../assets/images/icon-close.svg'
+import AmountInput from '../AmountInput'
+import NameInput from '../NameInput'
+import ThemeInput from '../ThemeInput'
 
 const PotsForm = ({setShowPotForm, editingPot, setEditingPot}) => {
   const { setPots, pots, setBalance } = useAppContext()
   const [formData, setFormData] = useState(
     {
       id: editingPot ? editingPot.id : Date.now(), 
-      potName: editingPot ? editingPot.potName : "",
+      name: editingPot ? editingPot.name : "",
       amount: editingPot ? editingPot.amount : "", 
       theme: editingPot ? editingPot.theme : ""
     }
@@ -17,7 +20,7 @@ const PotsForm = ({setShowPotForm, editingPot, setEditingPot}) => {
     if (editingPot) {
       setFormData({
         id: editingPot.id,
-        potName: editingPot.potName,
+        name: editingPot.name,
         amount: editingPot.amount,
         theme: editingPot.theme,
       });
@@ -37,7 +40,7 @@ const PotsForm = ({setShowPotForm, editingPot, setEditingPot}) => {
 
     const updatedPot = {
       id: editingPot ? editingPot.id : Date.now(),
-      potName: formData.potName,
+      name: formData.name,
       amount: parseFloat(formData.amount),
       theme: formData.theme,
     };
@@ -64,8 +67,8 @@ const PotsForm = ({setShowPotForm, editingPot, setEditingPot}) => {
         return;
       }
   
-      if (pots.some((b) => b.potName.toLowerCase() === updatedPot.potName.toLowerCase())) {
-        alert(`The pot name "${updatedPot.potName}" already exists. Please choose a different one.`);
+      if (pots.some((b) => b.name.toLowerCase() === updatedPot.name.toLowerCase())) {
+        alert(`The pot name "${updatedPot.name}" already exists. Please choose a different one.`);
         return;
       }
       setBalance((prev) => prev - updatedPot.amount)
@@ -74,7 +77,7 @@ const PotsForm = ({setShowPotForm, editingPot, setEditingPot}) => {
     }
    
     setShowPotForm(false)
-    setFormData({id: Date.now(), potName: "", amount: "", theme: ""})
+    setFormData({id: Date.now(), name: "", amount: "", theme: ""})
   }
  
   return (
@@ -86,50 +89,23 @@ const PotsForm = ({setShowPotForm, editingPot, setEditingPot}) => {
           </div>
           <p className='text-sm text-gray-400 mb-4'>Create a pot to set savings targets. These can help keep you on track as you save for special purchases.</p>
           <form action="" onSubmit={handleSubmit} className='text-[15px] flex flex-col'>
-            <label htmlFor="potName" className='text-sm font-semibold text-gray-400 mt-2.5'>Pot Name</label>
-            <input 
-              type="text" 
-              id='potName'
-              value={formData.potName} 
-              onChange={handleInputChanges} 
-              name="potName" 
-              required 
-              placeholder='e.g Rainy days' 
-              className='outline-none mt-1.5 border rounded-md py-2 px-3 border-gray-400'
+            <label htmlFor="name" className='text-sm font-semibold text-gray-400 mt-2.5'>Pot Name</label>
+            <NameInput
+              placeholder="e.g Rainy days"
+              formData={formData} 
+              handleInputChanges={handleInputChanges}
             />
             <label htmlFor="amount" className='text-sm font-semibold text-gray-400 mt-2.5'>Maximum spend</label>
-            <input 
-              type="number" 
-              id='amount'
-              value={formData.amount} 
-              onChange={handleInputChanges} 
-              name="amount" 
-              required 
-              placeholder='e.g R1000' 
-              className='outline-none mt-1.5 border rounded-md py-2 px-3 border-gray-400'
+            <AmountInput 
+              type="number"  
+              formData={formData} 
+              handleInputChanges={handleInputChanges} 
             />
             <label htmlFor="theme" className='text-sm font-semibold text-gray-400 mt-2.5'>Theme</label>
-            <select 
-              name="theme" 
-              id='theme'
-              value={formData.theme} 
-              onChange={handleInputChanges}
-              required 
-              className='outline-none mt-1.5 border rounded-md py-2 px-3 border-gray-400'
-            >
-              <option value="">Select a theme</option>
-              <option value="#5EFF00">Green</option>
-              <option value="#6B7280">Grey</option>
-              <option value="#008B8B">Cyan</option>
-              <option value="#CC5500">Orange</option>
-              <option value="#6e0280">Purple</option>
-              <option value="#FF0000">Red</option>
-              <option value="#B8860B">Yellow</option>
-              <option value="#000080">Navy</option>
-              <option value="#00CED1">Turquoise</option>
-              <option value="#8B4513">Brown</option>
-              <option value="#8b008b">Magenta</option>
-            </select>
+            <ThemeInput
+              formData={formData} 
+              handleInputChanges={handleInputChanges}
+            />
             <button type='submit' className='bg-gray-950 mt-2.5 cursor-pointer hover:bg-gray-700 py-2.5 rounded-md text-white w-full'>{editingPot ? "Update" : "Submit"}</button>
           </form>
       </div>

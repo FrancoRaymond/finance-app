@@ -1,9 +1,9 @@
 import React,{useState, useEffect} from 'react'
 import close from '../../assets/images/icon-close.svg'
 import { useAppContext } from '../../context/context'
-import CategoryInput from './CategoryInput'
-import AmountInput from './AmountInput'
-import ThemeInput from './ThemeInput'
+import CategoryInput from '../CategoryInput'
+import AmountInput from '../AmountInput'
+import ThemeInput from '../ThemeInput'
 
 const BudgetForm = ({setShowBudgetForm, setEditingBudget, editingBudget}) => {
   const {budgets, setBudgets} = useAppContext()
@@ -90,28 +90,22 @@ const BudgetForm = ({setShowBudgetForm, setEditingBudget, editingBudget}) => {
           className='text-[15px] flex flex-col'
         >
           <label htmlFor="category" className='text-sm font-semibold text-gray-400 mt-2.5'>Category</label>
-
           <CategoryInput 
             formData={formData} 
             handleInputChanges={handleInputChanges} 
           />
-
           <label htmlFor="amount" className='text-sm font-semibold text-gray-400 mt-2.5'>Maximum spend</label>
-
           <AmountInput 
+            type="number"
             formData={formData} 
             handleInputChanges={handleInputChanges} 
           />
-
           <label htmlFor="theme" className='text-sm font-semibold text-gray-400 mt-2.5'>Theme</label>
-
           <ThemeInput 
             formData={formData} 
             handleInputChanges={handleInputChanges} 
           />
-
           <button type='submit' className='bg-gray-950 mt-2.5 cursor-pointer hover:bg-gray-700 py-2.5 rounded-md text-white w-full'>{editingBudget ? "Update" : "Submit"}</button>
-
         </form>
       </div>
     </div>
