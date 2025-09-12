@@ -1,4 +1,5 @@
 import React,{useEffect, useState} from 'react'
+import toast from 'react-hot-toast'
 import { useAppContext } from '../../context/context'
 import close from '../../assets/images/icon-close.svg'
 import AmountInput from '../AmountInput'
@@ -55,25 +56,24 @@ const PotsForm = ({setShowPotForm, editingPot, setEditingPot}) => {
         const oldAmount = editingPot.amount;          
         const newAmount = updatedPot.amount;          
         const difference = newAmount - oldAmount;     
-    
         return prev - difference;                     
       });
-
+      toast.success(`pot updated successfully`)
       setEditingPot(null);
     } else {
       
       if (pots.some((b) => b.theme === updatedPot.theme)) {
-        alert(`The theme "${updatedPot.theme}" is already used. Please choose a different one.`);
+        toast.error(`The theme "${updatedPot.theme}" is already used. Please choose a different one.`);
         return;
       }
   
       if (pots.some((b) => b.name.toLowerCase() === updatedPot.name.toLowerCase())) {
-        alert(`The pot name "${updatedPot.name}" already exists. Please choose a different one.`);
+        toast.error(`The pot name "${updatedPot.name}" already exists. Please choose a different one.`);
         return;
       }
       setBalance((prev) => prev - updatedPot.amount)
-  
       setPots((prev) => [updatedPot, ...prev]);
+      toast.success(`${updatedPot.name} added successfully`)
     }
    
     setShowPotForm(false)

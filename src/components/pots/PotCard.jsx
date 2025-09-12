@@ -1,4 +1,5 @@
 import React,{useState} from 'react'
+import toast from 'react-hot-toast';
 import { useAppContext } from '../../context/context';
 import EditAndDelete from '../EditAndDelete'
 import DeleteModal from '../DeleteModal';
@@ -16,7 +17,7 @@ const PotCard = (
 ) => {
     const [openMenu, setOpenMenu] = useState(null);
     const [showDeleteModal, setShowDeleteModal] = useState(null);
-    const { balance, setBalance } = useAppContext()
+    const { setBalance } = useAppContext()
 
     const handleMenuClick = (id) => {
         setOpenMenu((prevId) => (prevId === id ? null : id));
@@ -29,6 +30,7 @@ const PotCard = (
     const confirmDelete = (id) => {
         setBalance((prev) => prev + pot.amount)
         setPots((prevPots) => prevPots.filter(prev => prev.id !== id))
+        toast.success("pot deleted successfully")
     }
 
     const handleAddOrWithdraw = (action, potId) => {

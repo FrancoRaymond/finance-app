@@ -1,4 +1,5 @@
 import React,{useState} from 'react'
+import toast from "react-hot-toast";
 import { useAppContext } from '../../context/context'
 import AmountInput from '../AmountInput'
 import close from '../../assets/images/icon-close.svg'
@@ -62,7 +63,7 @@ const TransactionForm = ({setShowTransactionForm}) => {
       const updated = [...prev, newTransaction]
       return updated
     })
-  
+    toast.success(`${formData.name} added succesfully`)
     setFormData({
       image: images[Math.floor(Math.random() * images.length)],
       name: "",
@@ -72,6 +73,7 @@ const TransactionForm = ({setShowTransactionForm}) => {
       recurring: false
     })
     setShowTransactionForm(false)
+    
   }
   
   return (

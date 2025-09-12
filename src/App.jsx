@@ -1,5 +1,6 @@
 import React,{ useState } from 'react'
 import { Routes, Route, Navigate } from 'react-router-dom';
+import toast, { Toaster } from "react-hot-toast";
 import AppProvider from './context/context';
 import Navbar from './components/Navbar';
 import Home from './pages/Overview';
@@ -26,6 +27,7 @@ function App() {
             <Route path="*" element={<Navigate to="/" />} />
           </Routes> 
         </div>
+        <Toaster position="top-right" />
       </div>
     </AppProvider>
   )

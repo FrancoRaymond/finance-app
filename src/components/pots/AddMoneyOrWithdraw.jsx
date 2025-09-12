@@ -1,6 +1,7 @@
 import React,{ useState } from 'react'
 import { useAppContext } from '../../context/context'
 import close from '../../assets/images/icon-close.svg'
+import toast from 'react-hot-toast'
 
 const AddMoneyOrWithdraw = (
     { 
@@ -45,10 +46,12 @@ const AddMoneyOrWithdraw = (
     
         if (actionType === "add") {
           setBalance((prev) => prev - numericAmount);
+          toast.success(`R${numericAmount} added successfully`)
         } else if (actionType === "withdraw") {
           setBalance((prev) => prev + numericAmount);
+          toast.success(`R${numericAmount} withdrawn successfully`)
         }
-    
+        
         handleClose();
     }
     

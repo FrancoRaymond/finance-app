@@ -1,4 +1,5 @@
 import React,{useState, useEffect} from 'react'
+import toast from 'react-hot-toast'
 import close from '../../assets/images/icon-close.svg'
 import { useAppContext } from '../../context/context'
 import CategoryInput from '../CategoryInput'
@@ -47,20 +48,22 @@ const BudgetForm = ({setShowBudgetForm, setEditingBudget, editingBudget}) => {
       setBudgets((prev) =>
         prev.map((b) => (b.id === editingBudget.id ? updatedBudget : b))
       );
+      toast.success(`${updatedBudget.category} budget updated successfully`)
       setEditingBudget(null);
     } else {
       
       if (budgets.some((b) => b.theme === updatedBudget.theme)) {
-        alert(`The theme "${updatedBudget.theme}" is already used. Please choose a different one.`);
+        toast.error(`Theme already used — please select a different one.`);
         return;
       }
   
       if (budgets.some((b) => b.category.toLowerCase() === updatedBudget.category.toLowerCase())) {
-        alert(`The category "${updatedBudget.category}" already exists. Please choose a different one.`);
+        toast.error(`The category "${updatedBudget.category}" already exists. Please choose a different one.`);
         return;
       }
   
-      setBudgets((prev) => [...prev, updatedBudget]);
+      setBudgets((prev) => [ updatedBudget, ...prev]);
+      toast.success(`${updatedBudget.category} budget added successfully`)
     }
   
     setFormData({ category: "", amount: "", theme: "" });

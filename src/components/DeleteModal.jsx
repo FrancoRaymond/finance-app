@@ -3,8 +3,6 @@ import close from '../assets/images/icon-close.svg'
 export default function DeleteModal(
     {
         data, 
-        onBack, 
-        onDelete,
         confirmDelete, 
         confirmationParagraph, 
         confirmDeleteLabel,
@@ -16,7 +14,7 @@ export default function DeleteModal(
         <div className='potsForm fixed flex items-center transition-all duration-500 justify-center top-0 left-0 w-full h-screen'>
             <div className="flex flex-col gap-6 bg-white rounded-md p-5 max-w-[500px]">
                 <div className='flex items-center justify-between'>
-                    <h2 className='text-lg font-semibold'>Delete {data.category ?? data.potName}?</h2>
+                    <h2 className='text-lg font-semibold'>Delete {data.category ?? data.name}?</h2>
                     <button onClick={() => setShowDeleteModal(null)}><img src={close} alt="" className='size-5 cursor-pointer'/></button>
                 </div>
                 <p className='text-sm text-gray-400'>{confirmationParagraph}</p>

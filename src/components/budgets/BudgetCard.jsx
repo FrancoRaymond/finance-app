@@ -1,4 +1,5 @@
 import React,{useState} from 'react'
+import toast from 'react-hot-toast';
 import EditAndDelete from '../EditAndDelete'
 import DeleteModal from '../DeleteModal';
 
@@ -16,6 +17,7 @@ const BudgetCard = ({budget, setBudgets, handleEdit}) => {
 
   const confirmDelete = (id) => {
     setBudgets((prevBudget) => prevBudget.filter(prev => prev.id !== id))
+    toast.success("Budget deleted successfully")
   }
 
   return (
@@ -47,7 +49,7 @@ const BudgetCard = ({budget, setBudgets, handleEdit}) => {
         {
           showDeleteModal === budget.id &&
           <DeleteModal
-          budget={budget}
+          data={budget}
           confirmDelete={confirmDelete}
           setShowDeleteModal={setShowDeleteModal}
           confirmationParagraph="Are you sure you want to delete this budget? This action cannot be reversed, and all the data inside it will be removed forever."
