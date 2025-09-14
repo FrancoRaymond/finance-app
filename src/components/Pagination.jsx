@@ -3,7 +3,7 @@ import React, { useState } from "react";
 
 const Transactions = ({ filteredTransactions }) => {
   const [page, setPage] = useState(0);
-  const itemsPerPage = 5;
+  const itemsPerPage = 10;
 
 
   const start = page * itemsPerPage;

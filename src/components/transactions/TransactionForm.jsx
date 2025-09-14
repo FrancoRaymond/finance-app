@@ -25,7 +25,6 @@ const TransactionForm = ({setShowTransactionForm}) => {
   const images = [icon1, icon2, icon3, icon4, icon5, icon6, icon6, icon7, icon8, icon9, icon10, icon11, icon12, icon13]
   const [formData, setFormData] = useState(
     {
-      id: crypto.randomUUID(),
       image: images[Math.floor(Math.random() * images.length)],
       name: "", 
       date: "", 
@@ -60,9 +59,10 @@ const TransactionForm = ({setShowTransactionForm}) => {
       amount: formattedAmount
     }
     setAddedTransactions((prev) => {
-      const updated = [...prev, newTransaction]
+      const updated = [...prev, {id:Date.now(), ...newTransaction}]
       return updated
     })
+    console.log(addedTransactions)
     toast.success(`${formData.name} added succesfully`)
     setFormData({
       image: images[Math.floor(Math.random() * images.length)],

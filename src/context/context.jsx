@@ -38,7 +38,7 @@ const AppProvider = ({ children }) => {
     localStorage.setItem("pots", JSON.stringify(pots))
   }, [pots])
 
-  //localStorage.removeItem('pots')
+  //localStorage.removeItem('addedTransactions')
 /*
   const inc = addedTransactions.length === 0 ? 0 : addedTransactions.filter(trans => trans.amount[0] === "+").reduce((acc, curr) => acc + Number(curr.amount.slice(1)), 0)
   const exp = addedTransactions.length === 0 ? 0 : addedTransactions.filter(trans => trans.amount[0] === "-").reduce((acc, curr) => acc + Number(curr.amount.slice(1)), 0)

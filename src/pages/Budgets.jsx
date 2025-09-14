@@ -1,5 +1,6 @@
 import React,{useState} from 'react'
 import { useAppContext } from '../context/context'
+import { CurrencyFormatter } from '../utils/CurrencyFormatter'
 import Chart from '../components/Chart'
 import BudgetForm from '../components/budgets/BudgetForm'
 import BudgetCard from '../components/budgets/BudgetCard'
@@ -7,13 +8,21 @@ import BudgetCard from '../components/budgets/BudgetCard'
 
 const Budgets = () => {
   const [showBudgetForm, setShowBudgetForm] = useState(false)
-  const {budgets, setBudgets} = useAppContext()
+  const {budgets, setBudgets, addedTransactions} = useAppContext()
   const [editingBudget, setEditingBudget] = useState(null);
-
+  
   const handleEdit = (budget) => {
     setEditingBudget(budget);
     setShowBudgetForm(true);
   };
+
+  const amountSpent = (budget, trans) => {
+    return CurrencyFormatter(
+      trans
+      .filter(item => item.category.toLowerCase() === budget.category.toLowerCase() && item.amount[0] === "-")
+      .reduce((accumulator, current) => accumulator + Number(current.amount.slice(1)), 0))
+  } 
+
 
   return (
     <div className='py-5 px-2 md:px-5 w-full'>
@@ -39,8 +48,8 @@ const Budgets = () => {
                 <div key={budget.id} className='flex justify-between py-2 px-4 border-l-4 rounded-md'  style={{ borderColor: budget.theme }}>
                   <span className='text-gray-400 text-sm'>{budget.category.charAt(0).toUpperCase() + budget.category.slice(1)}</span>
                   <div className='flex'>
-                    <strong className='text-sm'>R500</strong>
-                    <span className='text-gray-400 text-sm ml-1'>of R{budget.amount}</span>
+                    <strong className='text-sm'>{amountSpent(budget, addedTransactions)}</strong>
+                    <span className='text-gray-400 text-sm ml-1'>of {CurrencyFormatter(budget.amount)}</span>
                   </div>
                 </div>
               ))
