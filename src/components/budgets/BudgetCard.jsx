@@ -29,10 +29,10 @@ const BudgetCard = ({budget, setBudgets, handleEdit}) => {
   .filter(item => item.category.toLowerCase() === budget.category.toLowerCase() && item.amount[0] === "-")
   .reduce((accumulator, current) => accumulator + Number(current.amount.slice(1)), 0)
   
-
   const mostRecent = addedTransactions.filter(trans => trans.category.toLowerCase() === budget.category.toLowerCase() && trans.amount[0] === '-').sort((a, b) => b.id - a.id)[0] || undefined
 
-
+  const percentageSpent = Math.min((amountSpent / Number(budget.amount)) * 100, 100)
+  
   return (
 
     <div key={budget.id} className='bg-white w-full p-5 rounded-md'>
@@ -71,9 +71,9 @@ const BudgetCard = ({budget, setBudgets, handleEdit}) => {
          />
         }  
       </div>
-      <span className='text-gray-400 text-sm'>Maximum of R{budget.amount}</span>
+      <span className='text-gray-400 text-sm'>Maximum of {CurrencyFormatter(budget.amount)}</span>
       <div className='h-3 w-full p-0.5 rounded-md bg-gray-200 mt-5'>
-        <div className={`h-full w-[60%] rounded-md`} style={{ backgroundColor: budget.theme }}></div>
+        <div className={`h-full rounded-md`} style={{ backgroundColor: budget.theme, width: `${percentageSpent}%` }}></div>
       </div>
       <div className='grid grid-cols-2 mt-5 py-2'>
         <div className='flex flex-col px-8 border-l-4 rounded-md' style={{ borderLeft: `5px solid ${budget.theme}` }}>
@@ -99,7 +99,7 @@ const BudgetCard = ({budget, setBudgets, handleEdit}) => {
            
             <h3 className='font-semibold grow ml-5 text-sm'>{mostRecent.name}</h3>
             <div>
-              <p className={`font-semibold text-sm`}>{mostRecent.amount}</p>
+              <p className={`font-semibold text-sm`}>-{CurrencyFormatter(mostRecent.amount.slice(1))}</p>
               <span className='text-sm text-gray-500'>{mostRecent.date}</span>
             </div>
           </div>

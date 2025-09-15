@@ -62,7 +62,7 @@ const TransactionForm = ({setShowTransactionForm}) => {
       const updated = [...prev, {id:Date.now(), ...newTransaction}]
       return updated
     })
-    console.log(addedTransactions)
+ 
     toast.success(`${formData.name} added succesfully`)
     setFormData({
       image: images[Math.floor(Math.random() * images.length)],
