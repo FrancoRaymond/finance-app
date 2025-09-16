@@ -21,7 +21,7 @@ const RecurringBills = () => {
             <p className='text-gray-400 mt-2'>Total bills</p>
             <span className='text-xl font-bold mt-2'>{CurrencyFormatter(totalBills)}</span>
           </div>
-          <Summary />
+          <Summary sortedBills={sortedBills}/>
         </div>
         <div className='bg-white rounded-md p-4 w-full'>
           <SearchFilters 
