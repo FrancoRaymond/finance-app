@@ -1,4 +1,4 @@
-import React,{useState, useEffect} from 'react'
+import React,{useState} from 'react'
 import bills from '../assets/images/bills.svg'
 import { CurrencyFormatter } from '../utils/CurrencyFormatter'
 import Summary from '../components/recurring-bills/Summary'
@@ -23,19 +23,27 @@ const RecurringBills = () => {
           </div>
           <Summary sortedBills={sortedBills}/>
         </div>
-        <div className='bg-white rounded-md p-4 w-full'>
-          <SearchFilters 
-            searchInput={searchInput}
-            setSearchInput={setSearchInput}
-            sortInput={sortInput}
-            setSortInput={setSortInput}
-            sortedBills={sortedBills}
-            setSortedBills={setSortedBills}
-          />
-          <BillsTable 
-            sortedBills={sortedBills}
-          />
-        </div>  
+        {
+          sortedBills.length === 0 ? (
+            <div className='rounded-md w-full bg-gray-300 py-20 px-5 text-gray-500 text-center'>
+              No bills yet
+            </div>
+          ) : (
+            <div className='bg-white rounded-md p-4 w-full'>
+              <SearchFilters 
+                searchInput={searchInput}
+                setSearchInput={setSearchInput}
+                sortInput={sortInput}
+                setSortInput={setSortInput}
+                sortedBills={sortedBills}
+                setSortedBills={setSortedBills}
+              />
+              <BillsTable 
+                sortedBills={sortedBills}
+              />
+            </div>
+          )
+        }  
       </div>
     </div>
   )

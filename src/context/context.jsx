@@ -37,13 +37,15 @@ const AppProvider = ({ children }) => {
   useEffect(() => {
     localStorage.setItem("pots", JSON.stringify(pots))
   }, [pots])
-
-  //localStorage.removeItem('addedTransactions')
-/*
-  const inc = addedTransactions.length === 0 ? 0 : addedTransactions.filter(trans => trans.amount[0] === "+").reduce((acc, curr) => acc + Number(curr.amount.slice(1)), 0)
-  const exp = addedTransactions.length === 0 ? 0 : addedTransactions.filter(trans => trans.amount[0] === "-").reduce((acc, curr) => acc + Number(curr.amount.slice(1)), 0)
-  const bal = inc - exp*/
- 
+  
+  useEffect(() => {
+    const totalPots = pots.reduce((total, pot) => total + pot.amount, 0) 
+    const inc = addedTransactions.length === 0 ? 0 : addedTransactions.filter(trans => trans.amount[0] === "+").reduce((acc, curr) => acc + Number(curr.amount.slice(1)), 0)
+    const exp = addedTransactions.length === 0 ? 0 : addedTransactions.filter(trans => trans.amount[0] === "-").reduce((acc, curr) => acc + Number(curr.amount.slice(1)), 0)
+    setExpenses(exp)
+    setIncome(inc)
+    setBalance(inc - (totalPots + exp))
+  }, [addedTransactions, pots])
  
   return (
     <AppContext.Provider value={

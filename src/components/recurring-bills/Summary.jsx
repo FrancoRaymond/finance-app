@@ -11,12 +11,12 @@ const Summary = ({sortedBills}) => {
     return Math.floor(diffInTime / (1000 * 60 * 60 * 24));
   };
   
-  const paidBills = sortedBills.filter(bill => {
+  const dueSoon = sortedBills.filter(bill => {
     const diff = daysBetween(bill.date);
     return diff >= 0 && diff <= 7;
   });
   
-  const dueSoon = sortedBills.filter(bill => {
+  const paidBills = sortedBills.filter(bill => {
     const diff = daysBetween(bill.date);
     return diff < 0 && diff >= -3;
   });
