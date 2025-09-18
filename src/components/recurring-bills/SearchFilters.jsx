@@ -3,7 +3,7 @@ import { useAppContext } from '../../context/context';
 
 const SearchFilters = ({searchInput, setSearchInput, sortInput, setSortInput, setSortedBills}) => {
     const { addedTransactions } = useAppContext()
-    const bills = addedTransactions.filter(bill => bill.category.toLowerCase() === "bills")
+    const bills = addedTransactions.filter(bill => bill.category.toLowerCase() === "bills" && bill.recurring === true)
 
     useEffect(() => {
         let result = [...bills];

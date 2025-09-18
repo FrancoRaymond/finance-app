@@ -46,6 +46,7 @@ const AppProvider = ({ children }) => {
     setIncome(inc)
     setBalance(inc - (totalPots + exp))
   }, [addedTransactions, pots])
+
  
   return (
     <AppContext.Provider value={

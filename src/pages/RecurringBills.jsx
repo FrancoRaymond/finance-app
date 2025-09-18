@@ -1,4 +1,4 @@
-import React,{useState} from 'react'
+import React,{useEffect, useState} from 'react'
 import bills from '../assets/images/bills.svg'
 import { CurrencyFormatter } from '../utils/CurrencyFormatter'
 import Summary from '../components/recurring-bills/Summary'
@@ -9,7 +9,33 @@ const RecurringBills = () => {
   const [searchInput, setSearchInput] = useState('')
   const [sortInput, setSortInput] = useState('')
   const [sortedBills, setSortedBills] = useState([])
-  const totalBills = sortedBills.reduce((total, value) => total + Number(value.amount.slice(1)), 0)
+  const [totalBills, setTotalBills] = useState(0)
+  
+  useEffect(() => {
+    setTotalBills(sortedBills.reduce((total, value) => total + Number(value.amount.slice(1)), 0))
+  }, [ sortedBills])
+  
+  function getBillStatus(billDate) {
+    const today = new Date();
+    const billDay = new Date(billDate).getDate();
+    let dueDate = new Date(today.getFullYear(), today.getMonth(), billDay);
+    const diffTime = dueDate - today;
+    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+  
+    if (diffDays >= 0 && diffDays <= 3) {
+      return "due"; 
+    } else if (diffDays > 3 && diffDays <= 7) {
+      return "upcoming"; 
+    } else if (diffDays < 0 && diffDays >= -7) {
+      return "paid";
+    } else {
+      return "not due"; 
+    }
+  }
+  
+  const paidBills = sortedBills.filter(bill => getBillStatus(bill.date) === "paid")
+  const upcomingBills = sortedBills.filter(bill => getBillStatus(bill.date) === "upcoming")
+  const dueSoon = sortedBills.filter(bill => getBillStatus(bill.date) === "due")
 
   return (
     <div className='py-5 px-2 md:px-5 w-full'>
@@ -21,29 +47,26 @@ const RecurringBills = () => {
             <p className='text-gray-400 mt-2'>Total bills</p>
             <span className='text-xl font-bold mt-2'>{CurrencyFormatter(totalBills)}</span>
           </div>
-          <Summary sortedBills={sortedBills}/>
+          <Summary 
+            paidBills={paidBills} 
+            upcomingBills={upcomingBills} 
+            dueSoon={dueSoon}
+          />
         </div>
-        {
-          sortedBills.length === 0 ? (
-            <div className='rounded-md w-full bg-gray-300 py-20 px-5 text-gray-500 text-center'>
-              No bills yet
-            </div>
-          ) : (
-            <div className='bg-white rounded-md p-4 w-full'>
-              <SearchFilters 
-                searchInput={searchInput}
-                setSearchInput={setSearchInput}
-                sortInput={sortInput}
-                setSortInput={setSortInput}
-                sortedBills={sortedBills}
-                setSortedBills={setSortedBills}
-              />
-              <BillsTable 
-                sortedBills={sortedBills}
-              />
-            </div>
-          )
-        }  
+        <div className='bg-white rounded-md p-4 w-full'>
+          <SearchFilters 
+            searchInput={searchInput}
+            setSearchInput={setSearchInput}
+            sortInput={sortInput}
+            setSortInput={setSortInput}
+            sortedBills={sortedBills}
+            setSortedBills={setSortedBills}
+          />
+          <BillsTable 
+            sortedBills={sortedBills}
+            getBillStatus={getBillStatus}
+          />
+        </div>
       </div>
     </div>
   )

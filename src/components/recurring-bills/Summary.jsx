@@ -1,30 +1,7 @@
 import React from 'react'
 import { CurrencyFormatter } from '../../utils/CurrencyFormatter'
 
-const Summary = ({sortedBills}) => {
-
-  const today = new Date();
-
-  const daysBetween = (billDate) => {
-    const due = new Date(billDate);
-    const diffInTime = due.getTime() - today.getTime();
-    return Math.floor(diffInTime / (1000 * 60 * 60 * 24));
-  };
-  
-  const dueSoon = sortedBills.filter(bill => {
-    const diff = daysBetween(bill.date);
-    return diff >= 0 && diff <= 7;
-  });
-  
-  const paidBills = sortedBills.filter(bill => {
-    const diff = daysBetween(bill.date);
-    return diff < 0 && diff >= -3;
-  });
-  
-  const upcomingBills = sortedBills.filter(bill => {
-    const diff = daysBetween(bill.date);
-    return diff > 7;
-  });
+const Summary = ({paidBills, upcomingBills, dueSoon}) => {
 
   return (
     <div className='bg-white rounded-md p-4 order-2 w-full'>
