@@ -1,11 +1,11 @@
 import { PieChart, Pie, Cell } from 'recharts';
 import { useAppContext } from '../context/context' 
-
-
+import { CurrencyFormatter } from '../utils/CurrencyFormatter';
 
 const Chart = () => {
     const { budgets, addedTransactions } = useAppContext()
     const limit = budgets.length > 0 ? budgets.reduce((acc, val) => acc + val.amount, 0) : 0;
+    const total = addedTransactions.filter(trans => trans.amount[0] === "-").reduce((tot, val) => tot + Number(val.amount.slice(1)), 0)
 
   return (
     <div className=''>
@@ -25,8 +25,8 @@ const Chart = () => {
                 </Pie>
             </PieChart>
             <div className='absolute size-34 rounded-full bg-white z-10 flex flex-col gap-1.5 items-center justify-center'>
-                <span className='text-2xl font-bold'>R0</span>
-                <p className='text-gray-400 text-sm'>of R{limit} limit</p>
+                <span className='font-bold'>{CurrencyFormatter(total)}</span>
+                <p className='text-gray-400 text-[13px]'>of R{CurrencyFormatter(limit)} limit</p>
             </div>
             <div className='pieInnerRing absolute size-44 rounded-full'></div>
         </div>

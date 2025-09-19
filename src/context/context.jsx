@@ -47,7 +47,36 @@ const AppProvider = ({ children }) => {
     setBalance(inc - (totalPots + exp))
   }, [addedTransactions, pots])
 
- 
+  const [sortedBills, setSortedBills] = useState([])
+  const [totalBills, setTotalBills] = useState(0)
+  
+  useEffect(() => {
+    setTotalBills(sortedBills.reduce((total, value) => total + Number(value.amount.slice(1)), 0))
+  }, [ sortedBills])
+  
+  function getBillStatus(billDate) {
+    const today = new Date();
+    const billDay = new Date(billDate).getDate();
+    let dueDate = new Date(today.getFullYear(), today.getMonth(), billDay);
+    const diffTime = dueDate - today;
+    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+  
+    if (diffDays >= 0 && diffDays <= 3) {
+      return "due"; 
+    } else if (diffDays > 3 && diffDays <= 7) {
+      return "upcoming"; 
+    } else if (diffDays < 0 && diffDays >= -7) {
+      return "paid";
+    } else {
+      return "not due"; 
+    }
+  }
+  
+  const paidBills = sortedBills.filter(bill => getBillStatus(bill.date) === "paid")
+  const upcomingBills = sortedBills.filter(bill => getBillStatus(bill.date) === "upcoming")
+  const dueSoon = sortedBills.filter(bill => getBillStatus(bill.date) === "due")
+
+  
   return (
     <AppContext.Provider value={
       {
@@ -62,7 +91,15 @@ const AppProvider = ({ children }) => {
         budgets, 
         setBudgets,
         pots, 
-        setPots
+        setPots,
+        sortedBills, 
+        setSortedBills,
+        totalBills, 
+        setTotalBills,
+        getBillStatus,
+        paidBills,
+        upcomingBills,
+        dueSoon
       }
     }
     >

@@ -1,6 +1,7 @@
-import React,{useEffect, useState} from 'react'
+import React,{useState} from 'react'
 import bills from '../assets/images/bills.svg'
 import { CurrencyFormatter } from '../utils/CurrencyFormatter'
+import { useAppContext } from '../context/context'
 import Summary from '../components/recurring-bills/Summary'
 import BillsTable from '../components/recurring-bills/BillsTable'
 import SearchFilters from '../components/recurring-bills/SearchFilters'
@@ -8,34 +9,8 @@ import SearchFilters from '../components/recurring-bills/SearchFilters'
 const RecurringBills = () => {
   const [searchInput, setSearchInput] = useState('')
   const [sortInput, setSortInput] = useState('')
-  const [sortedBills, setSortedBills] = useState([])
-  const [totalBills, setTotalBills] = useState(0)
-  
-  useEffect(() => {
-    setTotalBills(sortedBills.reduce((total, value) => total + Number(value.amount.slice(1)), 0))
-  }, [ sortedBills])
-  
-  function getBillStatus(billDate) {
-    const today = new Date();
-    const billDay = new Date(billDate).getDate();
-    let dueDate = new Date(today.getFullYear(), today.getMonth(), billDay);
-    const diffTime = dueDate - today;
-    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-  
-    if (diffDays >= 0 && diffDays <= 3) {
-      return "due"; 
-    } else if (diffDays > 3 && diffDays <= 7) {
-      return "upcoming"; 
-    } else if (diffDays < 0 && diffDays >= -7) {
-      return "paid";
-    } else {
-      return "not due"; 
-    }
-  }
-  
-  const paidBills = sortedBills.filter(bill => getBillStatus(bill.date) === "paid")
-  const upcomingBills = sortedBills.filter(bill => getBillStatus(bill.date) === "upcoming")
-  const dueSoon = sortedBills.filter(bill => getBillStatus(bill.date) === "due")
+  const {sortedBills, setSortedBills,totalBills, getBillStatus, paidBills, upcomingBills, dueSoon} = useAppContext()
+
 
   return (
     <div className='py-5 px-2 md:px-5 w-full'>
