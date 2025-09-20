@@ -26,7 +26,7 @@ const Overview = () => {
           <h2 className='text-black text-2xl mt-2'>{CurrencyFormatter(expenses)}</h2>
         </div>
       </div> 
-      <div className='mt-5 grid grid-cols-1 gap-3 lg:grid-cols-5 lg:grid-rows-5'>
+      <div className='mt-5 grid grid-cols-1 gap-3 xl:grid-cols-5 lg:grid-rows-5'>
         <OverviewPots />
         <OverviewBudgets />
         <OverviewTransactions /> 

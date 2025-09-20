@@ -8,7 +8,7 @@ const Chart = () => {
     const total = addedTransactions.filter(trans => trans.amount[0] === "-").reduce((tot, val) => tot + Number(val.amount.slice(1)), 0)
 
   return (
-    <div className=''>
+    <div>
         <div className="relative flex justify-center items-center w-fitrounded-full">
             <PieChart width={250} height={250}>
                 <Pie
@@ -26,7 +26,7 @@ const Chart = () => {
             </PieChart>
             <div className='absolute size-34 rounded-full bg-white z-10 flex flex-col gap-1.5 items-center justify-center'>
                 <span className='font-bold'>{CurrencyFormatter(total)}</span>
-                <p className='text-gray-400 text-[13px]'>of R{CurrencyFormatter(limit)} limit</p>
+                <p className='text-gray-400 text-[13px]'>of {CurrencyFormatter(limit)} limit</p>
             </div>
             <div className='pieInnerRing absolute size-44 rounded-full'></div>
         </div>

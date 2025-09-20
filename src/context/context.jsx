@@ -1,8 +1,6 @@
 import React, { createContext, useContext, useEffect, useState} from "react";
 
-
 const AppContext = createContext(); 
-
 
 const AppProvider = ({ children }) => {
   const [balance, setBalance] = useState(0)
@@ -51,7 +49,7 @@ const AppProvider = ({ children }) => {
   const [totalBills, setTotalBills] = useState(0)
   
   useEffect(() => {
-    setTotalBills(sortedBills.reduce((total, value) => total + Number(value.amount.slice(1)), 0))
+    setTotalBills(sortedBills.filter(bill => bill.recurring === true).reduce((total, value) => total + Number(value.amount.slice(1)), 0))
   }, [ sortedBills])
   
   function getBillStatus(billDate) {
@@ -76,7 +74,6 @@ const AppProvider = ({ children }) => {
   const upcomingBills = sortedBills.filter(bill => getBillStatus(bill.date) === "upcoming")
   const dueSoon = sortedBills.filter(bill => getBillStatus(bill.date) === "due")
 
-  
   return (
     <AppContext.Provider value={
       {

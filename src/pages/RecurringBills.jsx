@@ -17,10 +17,10 @@ const RecurringBills = () => {
       <h2 className='font-semibold text-2xl sm:text-3xl'>Recurring bills</h2>
       <div className='grid gap-5 mt-8 grid-cols-1 xl:grid-cols-2 mb-10 sm:mb-14 md:mb-0'>
         <div className='flex flex-col gap-5 lg:flex-row xl:flex-col'>
-          <div className='bg-white rounded-md p-4 w-full'>
-            <img src={bills} alt="bills icon" className='size-8 fill-amber-50'/>
-            <p className='text-gray-400 mt-2'>Total bills</p>
-            <span className='text-xl font-bold mt-2'>{CurrencyFormatter(totalBills)}</span>
+          <div className='bg-white rounded-md p-4 w-full flex flex-col gap-2 justify-center'>
+            <img src={bills} alt="bills icon" className='size-8 fill-amber-50 lg:size-11'/>
+            <p className='text-gray-400'>Total bills</p>
+            <span className='text-xl font-bold lg:text-2xl'>{CurrencyFormatter(totalBills)}</span>
           </div>
           <Summary 
             paidBills={paidBills} 

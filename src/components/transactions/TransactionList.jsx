@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 
 
-const Transactions = ({ filteredTransactions }) => {
+const TransactionList = ({ filteredTransactions }) => {
   const [page, setPage] = useState(0);
   const itemsPerPage = 10;
 
@@ -37,7 +37,7 @@ const Transactions = ({ filteredTransactions }) => {
             <tbody className='flex flex-col gap-3'>
               {
                 currentTransactions.map(transaction => (
-                  <tr key={transaction.id} className='text-sm text-center px-2 grid grid-cols-4 items-center'>
+                  <tr key={transaction.id} className='even:bg-gray-100 text-sm text-center px-2 grid grid-cols-4 items-center'>
                     <td className='flex items-center gap-3'><img src={transaction.image} alt="" className='size-7 rounded-full'/> {transaction.name}</td>
                     <td>{transaction.category}</td>
                     <td>{transaction.date}</td>
@@ -72,4 +72,4 @@ const Transactions = ({ filteredTransactions }) => {
   );
 };
 
-export default Transactions;
+export default TransactionList;

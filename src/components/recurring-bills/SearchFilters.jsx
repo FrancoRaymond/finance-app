@@ -9,7 +9,7 @@ const SearchFilters = ({searchInput, setSearchInput, sortInput, setSortInput, se
         let result = [...bills];
     
         if (searchInput) {
-            result = result.filter(trans => trans.name.toLowerCase().startsWith(searchInput.toLowerCase()));
+          result = result.filter(trans => trans.name.toLowerCase().startsWith(searchInput.toLowerCase()));
         }
        
         switch (sortInput) {
@@ -26,10 +26,10 @@ const SearchFilters = ({searchInput, setSearchInput, sortInput, setSortInput, se
             result.sort((a, b) => b.name.localeCompare(a.name));
             break;
           case "Highest":
-            result.sort((a, b) => b.amount - a.amount);
+            result.sort((a, b) => a.amount - b.amount);
             break;
           case "Lowest":
-            result.sort((a, b) => a.amount - b.amount);
+            result.sort((a, b) => b.amount - a.amount);
             break;
         }
     
@@ -37,7 +37,7 @@ const SearchFilters = ({searchInput, setSearchInput, sortInput, setSortInput, se
       }, [searchInput, sortInput, addedTransactions])
 
   return (
-    <header className='flex justify-between'>
+    <header className='grid grid-cols-2 gap-5'>
         <input 
             type="text" 
             id='searchBill'
@@ -49,8 +49,8 @@ const SearchFilters = ({searchInput, setSearchInput, sortInput, setSortInput, se
             className='outline-none mt-1.5 border rounded-md py-2 px-3 border-gray-400'
         />
         <div className='flex items-center gap-3'>
-            <label htmlFor="" className='hidden lg:flex text-sm font-semibold text-gray-400 mt-2.5'>Sort by</label>
-            <select name="order" id="order" onChange={(e) => setSortInput(e.target.value)} className='outline-none text-[1rem] cursor-pointer mt-1.5 border rounded-md py-2 px-3 border-gray-400'>
+            <label htmlFor="" className='hidden lg:flex text-sm text-nowrap font-semibold text-gray-400 mt-2.5 '>Sort by</label>
+            <select name="order" id="order" onChange={(e) => setSortInput(e.target.value)} className='w-full outline-none text-[1rem] cursor-pointer mt-1.5 border rounded-md py-2.5 px-3 border-gray-400'>
                 <option value="Latest">Latest</option>
                 <option value="Oldest">Oldest</option>
                 <option value="A-Z">A to Z</option>

@@ -1,7 +1,7 @@
 import React,{ useEffect, useState } from 'react'
 import { useAppContext } from '../context/context.jsx'
 import TransactionForm from '../components/transactions/TransactionForm'
-import Pagination from '../components/Pagination.jsx'
+import TransactionList from '../components/transactions/TransactionList.jsx'
 
 
 const Transactions = () => {
@@ -38,10 +38,10 @@ const Transactions = () => {
         result.sort((a, b) => b.name.localeCompare(a.name));
         break;
       case "Highest":
-        result.sort((a, b) => b.amount - a.amount);
+        result.sort((a, b) => a.amount - b.amount);
         break;
       case "Lowest":
-        result.sort((a, b) => a.amount - b.amount);
+        result.sort((a, b) => b.amount - a.amount);
         break;
     }
 
@@ -87,7 +87,7 @@ const Transactions = () => {
                 </select>
               </div>  
             </div>
-            <Pagination filteredTransactions={filteredTransactions}/>  
+            <TransactionList filteredTransactions={filteredTransactions}/>  
           </div>
         )
       }
