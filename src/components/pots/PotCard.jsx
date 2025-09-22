@@ -17,7 +17,7 @@ const PotCard = (
 ) => {
     const [openMenu, setOpenMenu] = useState(null);
     const [showDeleteModal, setShowDeleteModal] = useState(null);
-    const { setBalance } = useAppContext()
+    const { setBalance, addedTransactions } = useAppContext()
 
     const handleMenuClick = (id) => {
         setOpenMenu((prevId) => (prevId === id ? null : id));
@@ -38,6 +38,13 @@ const PotCard = (
         setPotToEditId(potId)
         setShowAddMoneyOrWithdrawModal(true)
     } 
+
+    const amountSpent =  addedTransactions
+    .filter(item => item.category.toLowerCase() === pot.name.toLowerCase() && item.amount[0] === "-")
+    .reduce((accumulator, current) => accumulator + Number(current.amount.slice(1)), 0)
+    
+
+    const percentageSpent = Math.min((amountSpent / Number(pot.amount)) * 100, 100)
 
   return (
     <div className='bg-white p-4 rounded-md'>
@@ -78,13 +85,13 @@ const PotCard = (
         </div>
         <div className='flex items-center justify-between mt-4'>
             <span className='text-gray-400'>Total spent</span>
-            <span className='text-lg font-semibold'>0</span>
+            <span className='text-lg font-semibold'>{CurrencyFormatter(amountSpent)}</span>
         </div>
         <div className='h-2 w-full bg-gray-200 rounded-3xl mt-6'>
-            <div className='h-full w-[30%] rounded-3xl' style={{ backgroundColor: pot.theme }}></div>
+            <div className='h-full w-[30%] rounded-3xl' style={{ backgroundColor: pot.theme, width: `${percentageSpent}%` }}></div>
         </div>
         <div className='text-gray-600 flex justify-between text-sm mt-1'>
-            <span>0.00%</span>
+            <span>{percentageSpent}%</span>
             <span>Target of {CurrencyFormatter(pot.amount)}</span>
         </div>
         <div className='mb-3 mt-8 grid grid-cols-2 gap-6 text-sm'>

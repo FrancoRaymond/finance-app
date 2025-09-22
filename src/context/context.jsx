@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useEffect, useState} from "react";
+import React, { createContext, useContext, useEffect, useState, useMemo} from "react";
 
 const AppContext = createContext(); 
 
@@ -45,12 +45,13 @@ const AppProvider = ({ children }) => {
     setBalance(inc - (totalPots + exp))
   }, [addedTransactions, pots])
 
-  const [sortedBills, setSortedBills] = useState([])
+
+  const [sortedBills, setSortedBills] = useState(addedTransactions.filter(trans => trans.category.toLowerCase() === "bills" && trans.recurring))
   const [totalBills, setTotalBills] = useState(0)
-  
+
   useEffect(() => {
-    setTotalBills(sortedBills.filter(bill => bill.recurring === true).reduce((total, value) => total + Number(value.amount.slice(1)), 0))
-  }, [ sortedBills])
+    setTotalBills(sortedBills.reduce((total, value) => total + Number(value.amount.slice(1)), 0))
+  }, [addedTransactions])
   
   function getBillStatus(billDate) {
     const today = new Date();
