@@ -51,7 +51,7 @@ const PotCard = (
         <div className='flex justify-between items-center'>
             <div className='flex items-center gap-3.5'>
                 <div className={`size-3 rounded-full`} style={{ backgroundColor: pot.theme }}></div>
-                <h2 className='text-xl font-semibold'>{pot.name}</h2>
+                <h2 className='text-lg font-semibold'>{pot.name}</h2>
             </div>
             <div onClick={() => handleMenuClick(pot.id)} className="flex p-2 gap-0.5 cursor-pointer transition duration-200 relative">
                 <div className="flex gap-0.5 active:scale-150 transition duration-200">
@@ -84,8 +84,8 @@ const PotCard = (
             }
         </div>
         <div className='flex items-center justify-between mt-4'>
-            <span className='text-gray-400'>Total spent</span>
-            <span className='text-lg font-semibold'>{CurrencyFormatter(amountSpent)}</span>
+            <span className='text-gray-400 text-sm'>Total spent</span>
+            <span className='text-l font-semibold'>{CurrencyFormatter(amountSpent)}</span>
         </div>
         <div className='h-2 w-full bg-gray-200 rounded-3xl mt-6'>
             <div className='h-full w-[30%] rounded-3xl' style={{ backgroundColor: pot.theme, width: `${percentageSpent}%` }}></div>

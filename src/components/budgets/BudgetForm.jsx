@@ -70,6 +70,11 @@ const BudgetForm = ({setShowBudgetForm, setEditingBudget, editingBudget}) => {
     setEditingBudget(null);
     setShowBudgetForm(false);
   };
+
+  const handleClose = () => {
+    setShowBudgetForm(false)
+    setEditingBudget(null)
+  }
   
   return (
     <div className='budgetForm fixed flex items-center transition-all duration-500 justify-center top-0 left-0 w-full h-screen'>
@@ -77,7 +82,7 @@ const BudgetForm = ({setShowBudgetForm, setEditingBudget, editingBudget}) => {
         <div className='flex justify-between items-center mb-5'>
           <p className='font-semibold text-md text-[1rem]'>Add new Budget</p>
           <button 
-            onClick={() => setShowBudgetForm(false)}
+            onClick={() => handleClose()}
           >
             <img 
               src={close} 

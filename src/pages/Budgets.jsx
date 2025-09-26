@@ -66,7 +66,12 @@ const Budgets = () => {
             <div className='flex flex-col gap-4 mb-10 sm:mb-14 md:mb-0'>
               {
                 budgets.map(budget => (
-                  <BudgetCard key={budget.id} budget={budget} setBudgets={setBudgets} handleEdit={handleEdit}/>
+                  <BudgetCard 
+                    key={budget.id} 
+                    budget={budget} 
+                    setBudgets={setBudgets} 
+                    handleEdit={handleEdit}
+                  />
                 ))
               }
             </div> 
