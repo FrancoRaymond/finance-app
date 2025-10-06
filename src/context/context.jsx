@@ -46,12 +46,21 @@ const AppProvider = ({ children }) => {
   }, [addedTransactions, pots])
 
 
-  const [sortedBills, setSortedBills] = useState(addedTransactions.filter(trans => trans.category.toLowerCase() === "bills" && trans.recurring))
-  const [totalBills, setTotalBills] = useState(0)
+  const [sortedBills, setSortedBills] = useState([])
+  const [totalBills, setTotalBills] = useState(0);
 
   useEffect(() => {
-    setTotalBills(sortedBills.reduce((total, value) => total + Number(value.amount.slice(1)), 0))
-  }, [addedTransactions])
+    const bills = addedTransactions.filter(
+      trans => trans.category.toLowerCase() === "bills" && trans.recurring
+    );
+
+    setSortedBills(bills)
+  
+    setTotalBills(
+      bills.reduce((total, value) => total + Number(value.amount.slice(1)), 0)
+    );
+  }, [addedTransactions]);
+  
   
   function getBillStatus(billDate) {
     const today = new Date();
