@@ -5,7 +5,18 @@ import { useAppContext } from '../../context/context'
 import { CurrencyFormatter } from '../../utils/CurrencyFormatter'
 
 const OverviewPots = () => {
-  const { pots } = useAppContext()
+  const { pots, addedTransactions } = useAppContext()
+
+  const totalPots = pots.reduce((acc, pot) => acc + Number(pot.amount), 0);
+
+  const totalSpent = addedTransactions
+  .filter(item => 
+    item.amount[0] === "-" && 
+    pots.some(pot => pot.name.toLowerCase() === item.category.toLowerCase())
+  )
+  .reduce((acc, current) => acc + Number(current.amount.slice(1)), 0);
+
+  const amountSaved = totalPots - totalSpent;
   
   return (
     <div className='p-4 bg-white rounded-md lg:col-span-3 lg:row-span-2'>
@@ -24,7 +35,7 @@ const OverviewPots = () => {
               <img src={potsicon} alt="" className='size-8'/>
               <div>
                 <p className='text-sm text-gray-500'>Total saved</p>
-                <h2 className='text-black text-lg mt-2 font-bold'>{CurrencyFormatter(870)}</h2>
+                <h2 className='text-black text-lg mt-2 font-bold'>{CurrencyFormatter(amountSaved)}</h2>
               </div>
             </div>
             <div className='grid grid-cols-2 mt-3 gap-4 lg:items-center lg:gap-5 lg:justify-around lg:py-10'> 

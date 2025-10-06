@@ -17,7 +17,7 @@ const PotCard = (
 ) => {
     const [openMenu, setOpenMenu] = useState(null);
     const [showDeleteModal, setShowDeleteModal] = useState(null);
-    const { setBalance, addedTransactions } = useAppContext()
+    const { setBalance, addedTransactions, pots } = useAppContext()
 
     const handleMenuClick = (id) => {
         setOpenMenu((prevId) => (prevId === id ? null : id));
@@ -37,14 +37,13 @@ const PotCard = (
         setActionType(action)
         setPotToEditId(potId)
         setShowAddMoneyOrWithdrawModal(true)
-    } 
+    }
 
     const amountSpent =  addedTransactions
     .filter(item => item.category.toLowerCase() === pot.name.toLowerCase() && item.amount[0] === "-")
     .reduce((accumulator, current) => accumulator + Number(current.amount.slice(1)), 0)
     
-
-    const percentageSpent = Math.min((amountSpent / Number(pot.amount)) * 100, 100)
+    const percentageSpent = (amountSpent / Number(pot.amount) * 100).toFixed(2)
 
   return (
     <div className='bg-white p-4 rounded-md'>
@@ -95,8 +94,8 @@ const PotCard = (
             <span>Target of {CurrencyFormatter(pot.amount)}</span>
         </div>
         <div className='mb-3 mt-8 grid grid-cols-2 gap-6 text-sm'>
-            <button onClick={() => handleAddOrWithdraw("add", pot.id)} className='rounded-md text-black bg-gray-200 hover:bg-white hover:border hover:border-gray-600 transition duration-200 cursor-pointer py-2 px-5 font-semibold' >+ Add Money</button>
-            <button onClick={() => handleAddOrWithdraw("withdraw", pot.id)} className='rounded-md text-black bg-gray-200 hover:bg-white hover:border hover:border-gray-600 transition duration-200 cursor-pointer py-2 px-5 font-semibold' >Withdraw</button>
+            <button onClick={() => handleAddOrWithdraw("add", pot.id)} className='rounded-md text-black bg-gray-200 hover:bg-white hover:shadow-2xl transition duration-200 cursor-pointer py-2 px-5 font-semibold' >+ Add Money</button>
+            <button onClick={() => handleAddOrWithdraw("withdraw", pot.id)} className='rounded-md text-black bg-gray-200 hover:bg-white hover:shadow-2xl transition duration-200 cursor-pointer py-2 px-5 font-semibold' >Withdraw</button>
         </div>
     </div>
   )
