@@ -1,12 +1,12 @@
 import React,{useState} from 'react'
-import { useAppContext } from '../context/context'
+import { usePotsStore } from '../store/potsStore'
 import PotsForm from '../components/pots/PotsForm'
 import PotCard from '../components/pots/PotCard'
 import AddMoneyOrWithdraw from '../components/pots/AddMoneyOrWithdraw'
 
 const Pots = () => {
+  const { pots } = usePotsStore()
   const [showPotForm, setShowPotForm] = useState(false)
-  const { pots, setPots } = useAppContext()
   const [editingPot, setEditingPot] = useState(null);
   const [showAddMoneyOrWithdrawModal, setShowAddMoneyOrWithdrawModal] = useState(false)
   const [actionType, setActionType] = useState("")
@@ -43,7 +43,6 @@ const Pots = () => {
                 <PotCard 
                   key={pot.id} 
                   pot={pot} 
-                  setPots={setPots} 
                   handleEdit={handleEdit}
                   setPotToEditId={setPotToEditId}
                   setShowAddMoneyOrWithdrawModal={setShowAddMoneyOrWithdrawModal}
@@ -61,7 +60,6 @@ const Pots = () => {
           actionType={actionType}
           setActionType={setActionType}
           pots={pots}
-          setPots={setPots}
           potToEditId={potToEditId}
           setPotToEditId={setPotToEditId}   
         />

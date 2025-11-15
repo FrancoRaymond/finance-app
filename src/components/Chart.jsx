@@ -1,11 +1,13 @@
 import { PieChart, Pie, Cell } from 'recharts';
-import { useAppContext } from '../context/context' 
+import { useTransactionStore } from '../store/transactionStore';
+import { useBudgetsStore } from '../store/budgetsStore';
 import { CurrencyFormatter } from '../utils/CurrencyFormatter';
 
 const Chart = () => {
-    const { budgets, addedTransactions } = useAppContext()
+    const { transactions } = useTransactionStore()
+    const { budgets } = useBudgetsStore()
     const limit = budgets.length > 0 ? budgets.reduce((acc, val) => acc + val.amount, 0) : 0;
-    const total = addedTransactions.filter(trans => trans.amount[0] === "-").reduce((tot, val) => tot + Number(val.amount.slice(1)), 0)
+    const total = transactions.filter(trans => trans.amount[0] === "-").reduce((tot, val) => tot + Number(val.amount.slice(1)), 0)
 
   return (
     <div>

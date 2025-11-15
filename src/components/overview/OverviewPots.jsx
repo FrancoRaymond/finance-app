@@ -1,20 +1,21 @@
 import React from 'react'
 import potsicon from '../../assets/images/pots.svg'
 import { Link } from 'react-router-dom'
-import { useAppContext } from '../../context/context'
+import { usePotsStore } from '../../store/potsStore'
+import { useTransactionStore } from '../../store/transactionStore'
 import { CurrencyFormatter } from '../../utils/CurrencyFormatter'
 
 const OverviewPots = () => {
-  const { pots, addedTransactions } = useAppContext()
+  const { pots } = usePotsStore()
+  const { transactions } = useTransactionStore()
 
   const totalPots = pots.reduce((acc, pot) => acc + Number(pot.amount), 0);
 
-  const totalSpent = addedTransactions
+  const totalSpent = transactions
   .filter(item => 
     item.amount[0] === "-" && 
     pots.some(pot => pot.name.toLowerCase() === item.category.toLowerCase())
-  )
-  .reduce((acc, current) => acc + Number(current.amount.slice(1)), 0);
+  ).reduce((acc, current) => acc + Number(current.amount.slice(1)), 0);
 
   const amountSaved = totalPots - totalSpent;
   

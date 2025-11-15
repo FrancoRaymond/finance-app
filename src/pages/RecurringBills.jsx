@@ -1,16 +1,17 @@
 import React,{useState} from 'react'
+import { useRecurringBillsStore } from '../store/recurringBillsStore'
 import bills from '../assets/images/bills.svg'
 import { CurrencyFormatter } from '../utils/CurrencyFormatter'
-import { useAppContext } from '../context/context'
+
 import Summary from '../components/recurring-bills/Summary'
 import BillsTable from '../components/recurring-bills/BillsTable'
 import SearchFilters from '../components/recurring-bills/SearchFilters'
 
 const RecurringBills = () => {
+  const { totalBills } = useRecurringBillsStore()
+  const [filteredBills, setFilteredBills] = useState([])
   const [searchInput, setSearchInput] = useState('')
-  const [sortInput, setSortInput] = useState('')
-  const {sortedBills, setSortedBills,totalBills, getBillStatus, paidBills, upcomingBills, dueSoon} = useAppContext()
-
+  const [sortType, setSortType] = useState('')
 
   return (
     <div className='py-5 px-2 md:px-5 w-full'>
@@ -22,25 +23,26 @@ const RecurringBills = () => {
             <p className='text-gray-400'>Total bills</p>
             <span className='text-xl font-bold lg:text-2xl'>{CurrencyFormatter(totalBills)}</span>
           </div>
-          <Summary 
-            paidBills={paidBills} 
-            upcomingBills={upcomingBills} 
-            dueSoon={dueSoon}
-          />
+
+          <Summary />
+
         </div>
         <div className='bg-white rounded-md p-4 w-full'>
+
           <SearchFilters 
-            searchInput={searchInput}
+            filteredBills={filteredBills} 
+            setFilteredBills={setFilteredBills} 
+            searchInput={searchInput} 
             setSearchInput={setSearchInput}
-            sortInput={sortInput}
-            setSortInput={setSortInput}
-            sortedBills={sortedBills}
-            setSortedBills={setSortedBills}
+            sortType={sortType}
+            setSortType={setSortType}
           />
+
           <BillsTable 
-            sortedBills={sortedBills}
-            getBillStatus={getBillStatus}
+            filteredBills={filteredBills} 
+            setFilteredBills={setFilteredBills} 
           />
+
         </div>
       </div>
     </div>

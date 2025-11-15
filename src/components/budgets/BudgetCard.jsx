@@ -1,16 +1,17 @@
 import React,{useState} from 'react'
 import { Link } from 'react-router-dom';
-import { useAppContext } from '../../context/context';
+import { useTransactionStore } from '../../store/transactionStore';
+import { useBudgetsStore } from '../../store/budgetsStore';
 import { CurrencyFormatter } from '../../utils/CurrencyFormatter'
-import { formatDate } from '../../utils/DateFormatter';
 import toast from 'react-hot-toast';
 import EditAndDelete from '../EditAndDelete'
 import DeleteModal from '../DeleteModal';
 
-const BudgetCard = ({budget, setBudgets, handleEdit}) => {
+const BudgetCard = ({budget, handleEdit}) => {
+  const { transactions } = useTransactionStore()
+  const { deleteBudget } = useBudgetsStore()
   const [openMenu, setOpenMenu] = useState(null);
   const [showDeleteModal, setShowDeleteModal] = useState(null)
-  const {addedTransactions} = useAppContext()
 
   const handleMenuClick = (id) => {
     setOpenMenu((prevId) => (prevId === id ? null : id));
@@ -21,16 +22,15 @@ const BudgetCard = ({budget, setBudgets, handleEdit}) => {
   };
 
   const confirmDelete = (id) => {
-    setBudgets((prevBudget) => prevBudget.filter(prev => prev.id !== id))
+    deleteBudget(id)
     toast.success("Budget deleted successfully")
   }
 
-  const amountSpent =  addedTransactions
+  const amountSpent =  transactions
   .filter(item => item.category.toLowerCase() === budget.category.toLowerCase() && item.amount[0] === "-")
   .reduce((accumulator, current) => accumulator + Number(current.amount.slice(1)), 0)
   
-  const mostRecent = addedTransactions.filter(trans => trans.category.toLowerCase() === budget.category.toLowerCase() && trans.amount[0] === '-').sort((a, b) => b.id - a.id)[0] || undefined
-
+  const mostRecent = transactions.filter(trans => trans.category.toLowerCase() === budget.category.toLowerCase() && trans.amount[0] === '-').sort((a, b) => b.id - a.id)[0] || undefined
   const percentageSpent = Math.min((amountSpent / Number(budget.amount)) * 100, 100)
   
   return (

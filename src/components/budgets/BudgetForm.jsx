@@ -1,13 +1,13 @@
 import React,{useState, useEffect} from 'react'
 import toast from 'react-hot-toast'
 import close from '../../assets/images/icon-close.svg'
-import { useAppContext } from '../../context/context'
+import { useBudgetsStore } from '../../store/budgetsStore'
 import CategoryInput from '../CategoryInput'
 import AmountInput from '../AmountInput'
 import ThemeInput from '../ThemeInput'
 
 const BudgetForm = ({setShowBudgetForm, setEditingBudget, editingBudget}) => {
-  const {budgets, setBudgets} = useAppContext()
+  const { budgets, addBudget, editBudget } = useBudgetsStore()
   const [formData, setFormData] = useState({
     category: editingBudget ? editingBudget.category : "",
     amount: editingBudget ? editingBudget.amount : "",
@@ -27,7 +27,6 @@ const BudgetForm = ({setShowBudgetForm, setEditingBudget, editingBudget}) => {
 
   const handleInputChanges = (e) => {
     const {name, type, value, checked} = e.target
-
     setFormData(prevData => ({
       ...prevData,[name]:type === 'checkbox' ? checked : value
     }))
@@ -45,9 +44,7 @@ const BudgetForm = ({setShowBudgetForm, setEditingBudget, editingBudget}) => {
   
     if (editingBudget) {
       
-      setBudgets((prev) =>
-        prev.map((b) => (b.id === editingBudget.id ? updatedBudget : b))
-      );
+      editBudget(updatedBudget.id, updatedBudget)
       toast.success(`${updatedBudget.category} budget updated successfully`)
       setEditingBudget(null);
     } else {
@@ -62,7 +59,7 @@ const BudgetForm = ({setShowBudgetForm, setEditingBudget, editingBudget}) => {
         return;
       }
   
-      setBudgets((prev) => [ updatedBudget, ...prev]);
+      addBudget(updatedBudget);
       toast.success(`${updatedBudget.category} budget added successfully`)
     }
   

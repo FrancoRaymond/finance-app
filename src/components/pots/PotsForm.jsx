@@ -1,13 +1,13 @@
 import React,{useEffect, useState} from 'react'
+import { usePotsStore } from '../../store/potsStore'
 import toast from 'react-hot-toast'
-import { useAppContext } from '../../context/context'
 import close from '../../assets/images/icon-close.svg'
 import AmountInput from '../AmountInput'
 import NameInput from '../NameInput'
 import ThemeInput from '../ThemeInput'
 
 const PotsForm = ({setShowPotForm, editingPot, setEditingPot}) => {
-  const { setPots, pots, setBalance } = useAppContext()
+  const { addPot, editPot, pots } = usePotsStore()
   const [formData, setFormData] = useState(
     {
       id: editingPot ? editingPot.id : Date.now(), 
@@ -48,18 +48,10 @@ const PotsForm = ({setShowPotForm, editingPot, setEditingPot}) => {
   
     if (editingPot) {
       
-      setPots((prev) =>
-        prev.map((b) => (b.id === editingPot.id ? updatedPot : b))
-      );
-
-      setBalance((prev) => {
-        const oldAmount = editingPot.amount;          
-        const newAmount = updatedPot.amount;          
-        const difference = newAmount - oldAmount;     
-        return prev - difference;                     
-      });
+      editPot(updatedPot.id, updatedPot)
       toast.success(`pot updated successfully`)
       setEditingPot(null);
+
     } else {
       
       if (pots.some((b) => b.theme === updatedPot.theme)) {
@@ -71,13 +63,12 @@ const PotsForm = ({setShowPotForm, editingPot, setEditingPot}) => {
         toast.error(`The pot name "${updatedPot.name}" already exists. Please choose a different one.`);
         return;
       }
-      setBalance((prev) => prev - updatedPot.amount)
-      setPots((prev) => [updatedPot, ...prev]);
+      addPot(updatedPot)
       toast.success(`${updatedPot.name} added successfully`)
     }
    
     setShowPotForm(false)
-    setFormData({id: Date.now(), name: "", amount: "", theme: ""})
+    setFormData({ name: "", amount: "", theme: ""})
   }
 
   const handleClose = () => {

@@ -1,10 +1,11 @@
 import React from 'react'
 import Chart from '../Chart';
 import { Link } from 'react-router-dom';
-import { useAppContext } from '../../context/context';
+import { useBudgetsStore } from '../../store/budgetsStore';
 
 const OverviewBudgets = () => { 
-const { budgets } = useAppContext()
+const { budgets } = useBudgetsStore()
+
   return (
     <div className='p-4 bg-white rounded-md lg:col-span-2 lg:row-span-3'>
       <div className='flex items-center justify-between mb-4'>

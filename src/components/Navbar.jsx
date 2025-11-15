@@ -1,7 +1,6 @@
 import React,{useState, useEffect, useRef} from 'react'
 import { Link } from 'react-router-dom';
 import { useLocation } from 'react-router-dom'; 
-import { useAppContext } from '../context/context';
 import home from '../assets/images/home.svg'
 import transactions from '../assets/images/transactions.svg'
 import budget from '../assets/images/budget.svg'

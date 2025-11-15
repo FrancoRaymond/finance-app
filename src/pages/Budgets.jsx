@@ -1,5 +1,6 @@
 import React,{useState} from 'react'
-import { useAppContext } from '../context/context'
+import { useBudgetsStore } from '../store/budgetsStore'
+import { useTransactionStore } from '../store/transactionStore'
 import { CurrencyFormatter } from '../utils/CurrencyFormatter'
 import Chart from '../components/Chart'
 import BudgetForm from '../components/budgets/BudgetForm'
@@ -7,8 +8,9 @@ import BudgetCard from '../components/budgets/BudgetCard'
 
 
 const Budgets = () => {
+  const { budgets } = useBudgetsStore()
+  const { transactions } = useTransactionStore()
   const [showBudgetForm, setShowBudgetForm] = useState(false)
-  const {budgets, setBudgets, addedTransactions} = useAppContext()
   const [editingBudget, setEditingBudget] = useState(null);
   
   const handleEdit = (budget) => {
@@ -55,7 +57,7 @@ const Budgets = () => {
                     <div key={budget.id} className='flex justify-between py-2 px-4 border-l-4 rounded-md'  style={{ borderColor: budget.theme }}>
                       <span className='text-gray-400 text-sm'>{budget.category.charAt(0).toUpperCase() + budget.category.slice(1)}</span>
                       <div className='flex'>
-                        <strong className='text-sm'>{amountSpent(budget, addedTransactions)}</strong>
+                        <strong className='text-sm'>{amountSpent(budget, transactions)}</strong>
                         <span className='text-gray-400 text-sm ml-1'>of {CurrencyFormatter(budget.amount)}</span>
                       </div>
                     </div>
@@ -69,7 +71,6 @@ const Budgets = () => {
                   <BudgetCard 
                     key={budget.id} 
                     budget={budget} 
-                    setBudgets={setBudgets} 
                     handleEdit={handleEdit}
                   />
                 ))

@@ -1,5 +1,7 @@
-import React from 'react'
-import { useAppContext } from '../context/context';
+import React,{ useEffect } from 'react'
+import { useTransactionStore } from '../store/transactionStore';
+import { usePotsStore } from '../store/potsStore';
+import { useTotalsStore } from '../store/totalsStore';
 import { CurrencyFormatter } from '../utils/CurrencyFormatter';
 import OverviewPots from '../components/overview/OverviewPots';
 import OverviewBudgets from '../components/overview/OverviewBudgets';
@@ -7,7 +9,13 @@ import OverviewTransactions from '../components/overview/OverviewTransactions';
 import OverviewRecurringBills from '../components/overview/OverviewRecurringBills';
 
 const Overview = () => {
-  const {balance, income, expenses} = useAppContext()
+  const { pots} = usePotsStore()
+  const { transactions } = useTransactionStore()
+  const { calculateTotals, income, expenses, balance } = useTotalsStore()
+
+  useEffect(() => {
+    calculateTotals()
+  }, [transactions, pots])
   
   return (
     <div className='px-3 lg:px-6 pt-1 pb-14 sm:pb-20 md:pb-0 w-full'>

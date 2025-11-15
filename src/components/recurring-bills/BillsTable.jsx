@@ -1,23 +1,12 @@
 import React from 'react'
+import { useRecurringBillsStore } from '../../store/recurringBillsStore'
 import { CurrencyFormatter } from '../../utils/CurrencyFormatter'
 import paidIcon from '../../assets/images/check-icon.svg'
 import disclaimerIcon from '../../assets/images/disclaimer.svg'
 
-const BillsTable = ({sortedBills, getBillStatus}) => {
+const BillsTable = ({ filteredBills }) => {
+    const { getBillStatus, dateSuffix } = useRecurringBillsStore()
 
-    function dateSuffix(dateString) {
-        const date = new Date(dateString);
-        const day = date.getDate();
-      
-        const dayWithZero = day.toString().padStart(2, "0");
-        
-        let suffix = "th";
-        if (day % 10 === 1 && day !== 11) suffix = "st";
-        else if (day % 10 === 2 && day !== 12) suffix = "nd";
-        else if (day % 10 === 3 && day !== 13) suffix = "rd";
-      
-        return `${dayWithZero}${suffix}`;
-      }
   return (
     <table className='min-w-full table-auto mt-6 text-left flex flex-col gap-3'>
         <thead>
@@ -29,7 +18,7 @@ const BillsTable = ({sortedBills, getBillStatus}) => {
         </thead>
         <tbody className='flex flex-col gap-3 text-sm w-full'>
             {
-                sortedBills.map(bill => {
+                filteredBills.map(bill => {
                     const status = getBillStatus(bill.date);
 
                     return (

@@ -1,23 +1,25 @@
 import React,{useState} from 'react'
 import toast from 'react-hot-toast';
-import { useAppContext } from '../../context/context';
+import { useTransactionStore } from '../../store/transactionStore'
+import { usePotsStore } from '../../store/potsStore';
+import { CurrencyFormatter } from '../../utils/CurrencyFormatter'
 import EditAndDelete from '../EditAndDelete'
 import DeleteModal from '../DeleteModal';
-import { CurrencyFormatter } from '../../utils/CurrencyFormatter'
 
 const PotCard = (
     {
         pot, 
-        setPots, 
         handleEdit, 
         setPotToEditId, 
         setShowAddMoneyOrWithdrawModal, 
         setActionType
     }
 ) => {
+    const { transactions } = useTransactionStore()
+    const { deletePot } = usePotsStore()
     const [openMenu, setOpenMenu] = useState(null);
     const [showDeleteModal, setShowDeleteModal] = useState(null);
-    const { setBalance, addedTransactions, pots } = useAppContext()
+
 
     const handleMenuClick = (id) => {
         setOpenMenu((prevId) => (prevId === id ? null : id));
@@ -28,18 +30,17 @@ const PotCard = (
     };
     
     const confirmDelete = (id) => {
-        setBalance((prev) => prev + pot.amount)
-        setPots((prevPots) => prevPots.filter(prev => prev.id !== id))
+        deletePot(id)
         toast.success("pot deleted successfully")
     }
 
     const handleAddOrWithdraw = (action, potId) => {
-        setActionType(action)
         setPotToEditId(potId)
+        setActionType(action)
         setShowAddMoneyOrWithdrawModal(true)
     }
 
-    const amountSpent =  addedTransactions
+    const amountSpent =  transactions
     .filter(item => item.category.toLowerCase() === pot.name.toLowerCase() && item.amount[0] === "-")
     .reduce((accumulator, current) => accumulator + Number(current.amount.slice(1)), 0)
     

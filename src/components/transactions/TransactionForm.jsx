@@ -1,6 +1,6 @@
 import React,{useState} from 'react'
+import { useTransactionStore } from '../../store/transactionStore';
 import toast from "react-hot-toast";
-import { useAppContext } from '../../context/context'
 import AmountInput from '../AmountInput'
 import close from '../../assets/images/icon-close.svg'
 import icon1 from '../../assets/images/Logo-1.jpg'
@@ -19,8 +19,8 @@ import icon13 from '../../assets/images/logo-13.jpg'
 import CategoryInput from '../CategoryInput'
 import NameInput from '../NameInput'
 
+
 const TransactionForm = ({setShowTransactionForm}) => {
-  const { addedTransactions, setAddedTransactions } = useAppContext()
   const [amountError, setAmountError ] = useState(false)
   const images = [icon1, icon2, icon3, icon4, icon5, icon6, icon6, icon7, icon8, icon9, icon10, icon11, icon12, icon13]
   const [formData, setFormData] = useState(
@@ -33,6 +33,8 @@ const TransactionForm = ({setShowTransactionForm}) => {
       recurring: false
     }
   )
+
+  const { addTransaction } = useTransactionStore()
 
   const handleInputChanges = (e) => {
     const {name, type, value, checked} = e.target
@@ -58,11 +60,8 @@ const TransactionForm = ({setShowTransactionForm}) => {
       ...formData,
       amount: formattedAmount
     }
-    setAddedTransactions((prev) => {
-      const updated = [...prev, {id:Date.now(), ...newTransaction}]
-      return updated
-    })
- 
+
+    addTransaction({id:Date.now(), ...newTransaction}) 
     toast.success(`${formData.name} added succesfully`)
     setFormData({
       image: images[Math.floor(Math.random() * images.length)],
@@ -73,7 +72,6 @@ const TransactionForm = ({setShowTransactionForm}) => {
       recurring: false
     })
     setShowTransactionForm(false)
-    
   }
   
   return (

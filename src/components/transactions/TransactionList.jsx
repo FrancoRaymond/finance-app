@@ -1,10 +1,10 @@
 import React, { useState } from "react";
+import { useTransactionStore } from "../../store/transactionStore";
 
-
-const TransactionList = ({ filteredTransactions }) => {
+const TransactionList = () => {
+  const { filteredTransactions } = useTransactionStore()
   const [page, setPage] = useState(0);
   const itemsPerPage = 10;
-
 
   const start = page * itemsPerPage;
   const end = start + itemsPerPage;
@@ -73,5 +73,3 @@ const TransactionList = ({ filteredTransactions }) => {
 };
 
 export default TransactionList;
-
-
